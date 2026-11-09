@@ -1,0 +1,11 @@
+   $ cd $HOME/work/a3/run3
+1. The public configuration: the parameter file, the scales, the layout of a proof's arrays
+   $ cp $HOME/work/flashprove-sm120/prover/examples/target_small_f2_roomy/policy.txt $HOME/work/flashprove-sm120/prover/examples/target_small_f2_roomy/KL.bin $HOME/work/flashprove-sm120/prover/examples/target_small_f2_roomy/layout.txt config/
+2. cp_commit draws a seed and commits to the weights: ivk/ is for the clients, isk/ stays with the provider
+   $ /usr/bin/time -v $HOME/work/a3/progs/cp_commit -weights made-up-blocks -config config -M 1 -ivk ivk -isk isk > cp_commit.log 2>&1
+run_target_example.sh: this step failed with status 2; the last lines of $HOME/work/a3/run3/cp_commit.log:
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2

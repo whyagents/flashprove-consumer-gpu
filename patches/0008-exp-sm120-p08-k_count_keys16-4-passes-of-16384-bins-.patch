@@ -1,0 +1,58 @@
+From 934d3c291484253bc6f3210e23909973d3b1aeac Mon Sep 17 00:00:00 2001
+From: why-research <why-research@localhost>
+Date: Sun, 8 Nov 2026 18:16:35 -0800
+Subject: [PATCH 08/12] exp/sm120 p08: k_count_keys16: 4 passes of 16384 bins
+ (64 KiB) instead of 2 of 32768 (128 KiB)
+
+Semantics: The same histogram of 16-bit keys: each key k falls in exactly one quarter (k >> 14) at bin k & 16383, and quarter q's bins go to out[q * 16384 + bin] = out[k]. Upstream already used this multi-pass scheme with two halves; only the number of passes changes.
+---
+ prover/hiding/count_keys16.cuh | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/prover/hiding/count_keys16.cuh b/prover/hiding/count_keys16.cuh
+index b6bf385f..5d1c8d69 100644
+--- a/prover/hiding/count_keys16.cuh
++++ b/prover/hiding/count_keys16.cuh
+@@ -46,8 +46,9 @@ __global__ void k_count_keys16(const uint4 *keys, size_t nvb, int bpi, u32 *outA
+   const int b = blockIdx.x / bpi, w = blockIdx.x % bpi;
+   const uint4 *kb = keys + (size_t)b * nvb;
+   u32 *out = outAll + ((size_t)b << 16);
+-  for (u32 half = 0; half < 2; half++) {
+-    for (int i = threadIdx.x; i < 32768; i += blockDim.x) bins[i] = 0;
++  // exp/sm120: four quarters of 16384 bins (65536 B) instead of two halves of 32768 (131072 B > sm_120's 101,376 B)
++  for (u32 half = 0; half < 4; half++) {
++    for (int i = threadIdx.x; i < 16384; i += blockDim.x) bins[i] = 0;
+     __syncthreads();
+     for (size_t i = w * (size_t)blockDim.x + threadIdx.x; i < nvb; i += (size_t)bpi * blockDim.x) {
+       uint4 v = kb[i];
+@@ -55,22 +56,22 @@ __global__ void k_count_keys16(const uint4 *keys, size_t nvb, int bpi, u32 *outA
+ #pragma unroll
+       for (int a = 0; a < 8; a++) {
+         const u32 k = (x[a >> 1] >> (16 * (a & 1))) & 65535u;
+-        if (k >> 15 == half) atomicAdd(&bins[k & 32767u], 1u);
++        if (k >> 14 == half) atomicAdd(&bins[k & 16383u], 1u);
+       }
+     }
+     __syncthreads();
+-    for (int c = threadIdx.x; c < 32768; c += blockDim.x) atomicAdd(&out[half * 32768u + c], bins[c]);
++    for (int c = threadIdx.x; c < 16384; c += blockDim.x) atomicAdd(&out[half * 16384u + c], bins[c]);
+     __syncthreads();
+   }
+ }
+ // Launches k_count_keys16(); exits if the launch is rejected. `out`: the kernel's outAll; zero it
+-// first. The 131072-byte limit is set at the first call only, for the device then current.
++// first. The 65536-byte limit (exp/sm120: was 131072) is set at the first call only, for the device then current.
+ static inline void count_keys16(const uint4 *keys, size_t nvb, int bpi, int identities, u32 *out, cudaStream_t stream) {
+   static const bool once = [] {
+-    CK_ATTRIBUTE(k_count_keys16, cudaFuncAttributeMaxDynamicSharedMemorySize, 131072);
++    CK_ATTRIBUTE(k_count_keys16, cudaFuncAttributeMaxDynamicSharedMemorySize, 65536);
+     return true;
+   }();
+   (void)once;
+-  k_count_keys16<<<identities * bpi, 1024, 131072, stream>>>(keys, nvb, bpi, out);
++  k_count_keys16<<<identities * bpi, 1024, 65536, stream>>>(keys, nvb, bpi, out);
+   CK(cudaGetLastError());
+ }
+-- 
+2.43.0
+

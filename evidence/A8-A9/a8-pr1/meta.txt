@@ -1,0 +1,61 @@
+run=pr1 start=2026-11-09T15:09:22Z head=aa59d9307dab208196e56c63621153537f4c9e83 build=production
+1b39a3d9da06d4a632b7c3a1e94395e71788131e078469c939a24f101f9238fe  $HOME/cleanroom/fp-prover/prover/build/hc/cp_commit
+0a64a28d06858cd3b11a067d3488a8b9433f2722a86e32a00001bb4c574248a8  $HOME/cleanroom/fp-prover/prover/build/hc/cp_prove
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/cleanroom/fp-prover/prover/build/hc/cp_verify
+gpu_before=1138 MiB, 16303 MiB
+run_target_example_exit=0
+last_line=YES
+end=2026-11-09T15:09:51Z
+vram_peak_MiB=9385 samples=103
+cp_commit: Elapsed (wall clock) time (h:mm:ss or m:ss): 0:25.66
+cp_commit: Maximum resident set size (kbytes): 975016
+cp_prove: Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.20
+cp_prove: Maximum resident set size (kbytes): 947256
+commit| cp_commit: the limit: a stored table's random entries bear 65535 shown columns in all. Of a leaf its own link shows 51 and every batch 53: each leaf serves at most 1235 batches in all. Of the anchor t
+commit| group: last test: code 2^18, message 131072 + 218 random, 2^1 rows; mask code 2^17, 8192 + 218; distance 0.290939, m = 517, list 107, 218 positions; rule: Johnson radius with slack; its closeness term
+commit| group: own test: code 2^18, message 16384 + 3831 random, 2^3 rows; mask code 2^13, 256 + 59; distance 0.721371, m = 295, list 384, 59 positions; rule: Johnson radius with slack; its closeness terms re
+commit| group: own test: code 2^18, message 16384 + 98 random, 2^3 rows; mask code 2^13, 256 + 49; distance 0.748356, m = 277, list 415, 49 positions; rule: Johnson radius with slack; its closeness terms rest
+commit| table: 51 columns in the one-time test
+commit| smallness test: 128 combinations
+commit| accounting: THE LARGEST ROUND ERROR: 2^-128.00, in the round "RNG (G0, smallness test)". Each round's error is compared with the target by itself: the rounds' errors are not added to one another. Ther
+commit| accounting: rounds that hold with less than 0.01 bit to spare, work counted: 68: 5 of the smallness test, 63 with a closeness term (63 of these on the theorem on codes, ePrint 2025/2055, Theorem 4.6, 
+commit| accounting:   2^-128.00, 2 round(s): RNG (G#, smallness test)
+commit| accounting:   2^-128.00, 2 round(s): RNG (attention #, smallness test)
+commit| accounting:   2^-128.00, 1 round(s): RNG (head, smallness test)
+commit| accounting:   2^-128.00, 2 round(s): BASE lambda (a request's own test, last stage)
+commit| accounting:   the smallness test's round counts one column: the first that no small integer column explains, which is fixed before the draw (argued on paper for this protocol; see docs/limits.md); a u
+commit| accounting: hiding is a separate bound, in the numbers of queries and of proofs on one commitment, and is no part of these figures
+commit| accounting:   the smallness test's round by a union bound over the 3099 columns of its matrix (their number times its error: one event a column: blocks/iop/rng.h): 2^-116.40 (RNG (G0, smallness test))
+commit| the key file: GPU memory in bytes: the slab 1874025472, of which 114819072 for the folded row; the panel 8388608; 51 columns, 51 to a walk; free beside the slab: 13120831488
+commit| Open_F's seams: the own test on it: 0.0 s
+commit| Open_F's seams: their transforms, leaves, nodes and own tests: 0.0 s
+commit| the key file: the walks are over: 14616100864 bytes of GPU memory are free
+commit| the key file: the test on the table: 11.1 s
+commit| the key file: 1095312 bytes; 2 walks over the weights for the test on the table; GPU memory at the peak in lent's pools: 608026624 bytes and 14155776; beside the slab, at the most, the engine's memory
+commit| plan-round: 128.001105 0 1 0 BASE lambda (a request's own test, last stage)
+commit| plan-round: 128.008271 0 4 0 FOLD round (a request's own test, stage #)
+commit| accounting: rounds that hold with less than 0.01 bit to spare, work counted: 20: 0 of the smallness test, 20 with a closeness term (20 of these on the theorem on codes, ePrint 2025/2055, Theorem 4.6, 
+commit| accounting:   2^-128.00, 1 round(s): BASE lambda (a request's own test, last stage)
+commit| accounting:   2^-128.00, 4 round(s): FOLD round (a request's own test, stage #)
+commit| accounting: hiding is a separate bound, in the numbers of queries and of proofs on one commitment, and is no part of these figures
+commit| weight hiding: NOT CHECKED BY THIS CALL (it rests on how the commitment was made)
+commit| the entry: GPU memory in bytes: the slab 2664871936, of which 229638144 for the two folded rows; the panel 8388608; host memory for the folded vectors: 0 and 0; 51 + 51 columns, 51 and 51 to a walk
+commit| Open_F's seams: the own test on it: 0.0 s
+commit| Open_F's seams: the own test on it: 0.0 s
+commit| Open_F's seams: their transforms, leaves, nodes and own tests: 0.0 s
+commit| Open_F's seams: their transforms, leaves, nodes and own tests: 0.0 s
+commit| the entry: the walks are over: 15037628416 bytes of GPU memory are free
+commit| the entry: 537432 bytes; 51 + 51 columns; 4 walks over the weights; GPU memory at the peak in lent's pools: 622182400 bytes and 28311552; beside the slab, at the most, the engine's memory pool held 30
+commit| accounting: rounds that hold with less than 0.01 bit to spare, work counted: 12: 0 of the smallness test, 12 with a closeness term (12 of these on the theorem on codes, ePrint 2025/2055, Theorem 4.6, 
+commit| accounting: hiding is a separate bound, in the numbers of queries and of proofs on one commitment, and is no part of these figures
+commit| weight hiding: NOT CHECKED BY THIS CALL (it rests on how the commitment was made)
+prove| # GPU memory: 1.335 GB are in use at the start of this run, including its own CUDA context
+--- cp_verify.log
+weight hiding: NOT CHECKED BY THIS RUN (it rests on how the commitment was made)
+accounting: hiding is a separate bound, in the numbers of queries and of proofs on one commitment, and is no part of these figures
+weight hiding: NOT CHECKED BY THIS CALL (it rests on how the commitment was made)
+covered: r=15 e=64 T=64 C=256 theta=256 cap=0 s=16 sh=8 positions=15..63 tokens=16..63 y=yes next-token=no policy=exact-match above-clip=0 (places in the request, counted from 0; y=yes: the answer is about y too; it is about nothing else; above-clip: so many of the tokens named by tokens= may cost more than C, and such a token may be any token. It is no limit on the tokens that may be any token: one that costs C or less may be any token too where the committed model's logits lie close together, and no verifier sees that. All costs, each counted as at most C, add up to at most theta times the number of these tokens)
+commitment: 49 closeness rounds of the one-time files rest on another source than the bound within a third of the distance; the table has a record: the binding of the weights rests on the theorem on codes (ePrint 2025/2055, Theorem 4.6), taken as given
+proof of work: up to 32 bits counted in 38 rounds; with it the least round has 128.00 bits, without it 96.23 bits
+result-v1 status=0 claim=exact-match id=9de61cbbfd1ec4520840dbda5894107c9992e9e8c4ff33b095822c49e033449a bits=128 work=32 work-rounds=38 least-round=128.00 least-round-without-work=96.23 commitment-assumed-rounds=49 record=1 r=15 e=64 T=64 tokens=16..63 y=yes policy=exact-match C=256 theta=256 cap=0 s=16 sh=8 sT=4 F=24 above-clip=0 leaf=0 stages=key,leaf,request dw=8 build=93afdaf592393a54ebd17b681d1c03295eb883f0161ff0e6ab872a3b39939595
+YES

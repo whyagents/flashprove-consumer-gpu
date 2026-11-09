@@ -1,0 +1,30 @@
+From 0e45aeab97806ae89d117e3da7f27176c21442b3 Mon Sep 17 00:00:00 2001
+From: why-research <why-research@localhost>
+Date: Sun, 8 Nov 2026 18:24:19 -0800
+Subject: [PATCH 09/12] exp/sm120 p09: k_fold_combine_bytes limit 100 KiB -> 96
+ KiB: its attribute (102,400 B) exceeds sm_120's per-block maximum
+
+Semantics: combine_by_bytes() already returns false, with nothing written, when a fold's room exceeds the limit, and the caller then folds those rows by the field's arithmetic. Only folds whose room lies in (96 KiB, 100 KiB] change path; both paths compute the same folded row.
+---
+ prover/engine/fold.cuh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/prover/engine/fold.cuh b/prover/engine/fold.cuh
+index 2e33754c..323d3bf4 100644
+--- a/prover/engine/fold.cuh
++++ b/prover/engine/fold.cuh
+@@ -1396,9 +1396,9 @@ private:
+     // A pitch of 4 words past a multiple of 32: eight rows' words meet no shared-memory bank twice.
+     const u32 n = (u32)narrow_.size(), padded = (n + 7) / 8 * 8, pitch = (4 * padded + 127) / 128 * 128 + 16;
+     const size_t room = fold_bytes_room(pitch, padded);
+-    if (room > (size_t)100 << 10) return false; // (two blocks on a multiprocessor)
++    if (room > (size_t)96 << 10) return false; // (two blocks on a multiprocessor) exp/sm120: was 100 << 10 = 102,400 B > sm_120's 101,376 B per block
+     static const bool set = [] {
+-      ENGINE_CK_ATTRIBUTE(k_fold_combine_bytes, cudaFuncAttributeMaxDynamicSharedMemorySize, 100 << 10);
++      ENGINE_CK_ATTRIBUTE(k_fold_combine_bytes, cudaFuncAttributeMaxDynamicSharedMemorySize, 96 << 10);
+       return true;
+     }();
+     (void)set;
+-- 
+2.43.0
+

@@ -1,0 +1,219 @@
+From aa59d9307dab208196e56c63621153537f4c9e83 Mon Sep 17 00:00:00 2001
+From: why-research-cleanroom <why-research@localhost>
+Date: Mon, 9 Nov 2026 06:55:25 -0800
+Subject: [PATCH] p13: accept the 256/32 small model shape (model-shape hunks
+ only of zkwasm/FlashProve-L4 @ eac41543adb3e287e3d98c3c657b8f3cc7b64bb1
+ upstream-l4-small-model.patch, Apache-2.0)
+
+Files: prover/weights_blocks/gguf_source.cuh prover/weights_commitment/fold_source.cuh prover/weights_commitment/fold_weights.cuh prover/hash_commitment/hf_commit_weights.cuh prover/weights_commitment/worst_case.cuh weight_sums/weight_sums.cpp. No kernel, verifier, protocol or format change. Upstream width/head 5120/128 kept.
+---
+ prover/hash_commitment/hf_commit_weights.cuh |  2 +-
+ prover/weights_blocks/gguf_source.cuh        |  9 ++++---
+ prover/weights_commitment/fold_source.cuh    |  5 ++--
+ prover/weights_commitment/fold_weights.cuh   | 15 +++++++----
+ prover/weights_commitment/worst_case.cuh     | 19 +++++++++++++
+ weight_sums/weight_sums.cpp                  | 28 +++++++++++---------
+ 6 files changed, 54 insertions(+), 24 deletions(-)
+
+diff --git a/prover/hash_commitment/hf_commit_weights.cuh b/prover/hash_commitment/hf_commit_weights.cuh
+index 18a31741..c2f1c1fc 100644
+--- a/prover/hash_commitment/hf_commit_weights.cuh
++++ b/prover/hash_commitment/hf_commit_weights.cuh
+@@ -280,7 +280,7 @@ struct PinnedWeights : WeightWalker {
+                       "takes at most 24; nothing is written\n", t.name.c_str(), t.e);
+       exit(2);
+     }
+-    const ::fold::Reads rd = ::fold::reads(kind);
++    const ::fold::Reads rd = ::fold::reads(kind, source.file.embedding_length, source.file.key_length);
+     if (!rd.norm[0]) return;
+     const ::gguf::Tensor &norm = source.file.at(blk + rd.norm + ".weight");
+     if (norm.type != ::gguf::F32 || norm.cells() != g.dims[0]) {
+diff --git a/prover/weights_blocks/gguf_source.cuh b/prover/weights_blocks/gguf_source.cuh
+index 73979203..cb435226 100644
+--- a/prover/weights_blocks/gguf_source.cuh
++++ b/prover/weights_blocks/gguf_source.cuh
+@@ -26,8 +26,9 @@ struct GgufSource : BlockSource {
+   // messages; it must not be empty.
+   void open(const std::string &setup_dir, const std::vector<std::string> &shards) {
+     file_.open_folder(setup_dir);
+-    if (file_.embedding_length != 5120 || file_.key_length != 128)
+-      stop("only models of width 5120 and head width 128 are supported", shards[0]);
++    if (!((file_.embedding_length == 5120 && file_.key_length == 128) ||
++          (file_.embedding_length == 256 && file_.key_length == 32)))
++      stop("supported width/head-width pairs are 5120/128 and 256/32", shards[0]);
+     if ((uint64_t)shape.d != file_.embedding_length || (uint64_t)shape.dh != file_.key_length ||
+         (uint64_t)shape.layers != file_.block_count)
+       stop("the model has " + std::to_string(file_.block_count) + " layers of width " +
+@@ -117,7 +118,7 @@ struct GgufSource : BlockSource {
+   // gives the norm and c_word, c_0's binary32 bit pattern. Cached per (norm, c_word).
+   // gamma is defined in docs/model.md, "11.4 From a decoded value to an integer" (there gamma_k).
+   const float *gain(int stream, int layer) override {
+-    const fold::Reads reads = fold::reads(kind(stream, layer));
++    const fold::Reads reads = fold::reads(kind(stream, layer), file_.embedding_length, file_.key_length);
+     if (!reads.norm[0]) return nullptr;
+     const std::string n =
+         (stream == 14 ? std::string() : "blk." + std::to_string(layer) + ".") + reads.norm + ".weight";
+@@ -125,7 +126,7 @@ struct GgufSource : BlockSource {
+     if (gamma) return gamma;
+     const gguf::Tensor &g = file_.at(n);
+     if (g.type != gguf::F32 || g.cells() != file_.embedding_length)
+-      stop("the norm must have 5120 values of type F32", n);
++      stop("the norm must have embedding_length values of type F32", n);
+     // The gains pass through a page-locked staging buffer and are zeroed there: they are weights.
+     CK(cudaEventSynchronize(staged_[0]));
+     file_.read(g, 0, g.bytes(), stage_[0]);
+diff --git a/prover/weights_commitment/fold_source.cuh b/prover/weights_commitment/fold_source.cuh
+index e609e91b..51c81b5c 100644
+--- a/prover/weights_commitment/fold_source.cuh
++++ b/prover/weights_commitment/fold_source.cuh
+@@ -133,8 +133,9 @@ struct FoldSource {
+   // descriptor (gguf::Model::open_folder(), gguf_file.h). Exits with code 2 if it rejects a file.
+   void open(const std::string &setup) {
+     file.open_folder(setup);
+-    if (file.embedding_length != 5120 || file.key_length != 128) {
+-      fprintf(stderr, "the two constants of the conversion to integers are valid only for d = 5,120 and dh = 128\n");
++    if (!((file.embedding_length == 5120 && file.key_length == 128) ||
++          (file.embedding_length == 256 && file.key_length == 32))) {
++      fprintf(stderr, "supported width/head-width pairs are 5120/128 and 256/32\n");
+       exit(2);
+     }
+     FILE *f = file.side("wsums.txt");
+diff --git a/prover/weights_commitment/fold_weights.cuh b/prover/weights_commitment/fold_weights.cuh
+index 35e07f35..a8988635 100644
+--- a/prover/weights_commitment/fold_weights.cuh
++++ b/prover/weights_commitment/fold_weights.cuh
+@@ -177,13 +177,18 @@ struct Reads {
+   const char *norm;
+   uint32_t c_word;
+ };
+-inline Reads reads(const std::string &kind) {
+-  if (kind == "attn_q") return {"attn_norm", 0x3DCA62C2u};
+-  if (kind == "attn_k" || kind == "attn_v") return {"attn_norm", 0x3F8F1BBDu};
++inline Reads reads(const std::string &kind, uint64_t width = 5120, uint64_t head = 128) {
++  // At width 256, sqrt(d) / 2^floor(log2(sqrt(d))) = 1. This is the
++  // norm convention used by fit_scales at small sizes; query folding adds 1/sqrt(32).
++  const bool small = width == 256 && head == 32;
++  const uint32_t nc = small ? 0x3F800000u : 0x3F8F1BBDu;
++  const uint32_t qc = small ? 0x3E3504F3u : 0x3DCA62C2u;
++  if (kind == "attn_q") return {"attn_norm", qc};
++  if (kind == "attn_k" || kind == "attn_v") return {"attn_norm", nc};
+   for (const char *k :
+        {"ffn_gate", "ffn_up", "ffn_gate_inp", "ffn_gate_shexp", "ffn_up_shexp", "ffn_gate_exps", "ffn_up_exps"})
+-    if (kind == k) return {"ffn_norm", 0x3F8F1BBDu};
+-  if (kind == "output") return {"output_norm", 0x3F8F1BBDu};
++    if (kind == k) return {"ffn_norm", nc};
++  if (kind == "output") return {"output_norm", nc};
+   return {"", 0};
+ }
+ 
+diff --git a/prover/weights_commitment/worst_case.cuh b/prover/weights_commitment/worst_case.cuh
+index f7b53274..6cfd1f03 100644
+--- a/prover/weights_commitment/worst_case.cuh
++++ b/prover/weights_commitment/worst_case.cuh
+@@ -822,6 +822,25 @@ struct Check {
+     Clock clock(seconds_norms);
+     norms++;
+     if (rows * n0 > matrix_cells || std::min(rows, n0) * std::min(rows, n0) > gram_cells) stop("a matrix is larger than planned");
++    if (sh.d == 256 && sh.dh == 32) {
++      // The padded small model has exact zero experts and an identity layer.
++      // Check zeros in the integer data, before outward rounding introduces a
++      // subnormal Frobenius bound whose Gram scaling would overflow.
++      // Nonzero sentinels make a missing copy decline this shortcut.
++      std::vector<short> integers(rows * n0, 1);
++      CK(cudaMemcpy(integers.data(), w, integers.size() * sizeof(short), cudaMemcpyDeviceToHost));
++      std::vector<double> factors;
++      if (row_scale) {
++        factors.assign(rows, NAN);
++        CK(cudaMemcpy(factors.data(), row_scale, rows * sizeof(double), cudaMemcpyDeviceToHost));
++      }
++      bool zero = true;
++      for (size_t i = 0; i < integers.size(); ++i) {
++        const double s = row_scale ? factors[i / n0] : 1;
++        if (!std::isfinite(s) || (s != 0 && integers[i] != 0)) { zero = false; break; }
++      }
++      if (zero) return 0; // ||0||_2 = 0; every nonzero matrix keeps the original guards.
++    }
+     k_to_double<<<8192, 256>>>(w, rows, (int)n0, row_scale, matrix);
+     const int n = (int)std::min(rows, n0);
+     // A_0 is the matrix; A_(j+1) is cuBLAS's Gram matrix of A_j / 2^e_j, a product of inner length
+diff --git a/weight_sums/weight_sums.cpp b/weight_sums/weight_sums.cpp
+index 1d3c176a..b69010ff 100644
+--- a/weight_sums/weight_sums.cpp
++++ b/weight_sums/weight_sums.cpp
+@@ -907,6 +907,7 @@ inline void decode(std::uint32_t type, const std::uint8_t *bytes, std::size_t el
+ 
+ // One committed tensor, with the norm that it reads, if any. For `constant`, see `Use`.
+ struct Job {
++  bool allow_zero = false; // Only the small-model embedding admits inactive zero branches.
+   const Tensor *tensor = nullptr;
+   const Tensor *norm = nullptr;
+   std::uint32_t constant = 0;
+@@ -1025,11 +1026,12 @@ inline Line convert(const Job &job, int eres) {
+     for_each_product(tensor, multipliers, [&](const float *products, std::size_t count) {
+       for (std::size_t i = 0; i < count; ++i) mx = std::max(mx, std::fabs(products[i]));
+     });
+-    if (mx == 0.0f) {
++    if (mx == 0.0f && !job.allow_zero)
+       outside_the_rule(Status::bound, "Every value of the tensor " + tensor.name + " is 0" +
+                                           (job.norm != nullptr ? " after the multiplication by its norm." : "."));
+-    }
+-    exponent = choose_exponent(mx);
++    // Zero padding and inactive routed experts have no largest admissible exponent.
++    // Canonicalize them to exponent zero; their committed integers remain exactly zero.
++    exponent = mx == 0.0f ? 0 : choose_exponent(mx);
+     if (exponent < -100 || exponent > 100) {
+       outside_the_rule(Status::bound, "The exponent of the tensor " + tensor.name + " is not between -100 and 100.");
+     }
+@@ -1282,10 +1284,9 @@ inline std::vector<Job> plan(std::vector<Shard> &shards) {
+   const auto key_length = first.metadata.find(prefix + ".attention.key_length");
+   const bool has_head_dimension = key_length != first.metadata.end() && key_length->second.is_unsigned();
+   const std::uint64_t head_dimension = has_head_dimension ? key_length->second.number : kHeadDimension;
+-  if (width != kWidth) outside_the_rule(Status::bound, first.path + ": the embedding_length is not 5120.");
+-  if (head_dimension != kHeadDimension) {
+-    outside_the_rule(Status::bound, first.path + ": the attention.key_length is not 128.");
+-  }
++  const bool small = width == 256 && head_dimension == 32;
++  if (!small && (width != kWidth || head_dimension != kHeadDimension))
++    outside_the_rule(Status::bound, first.path + ": supported width/head-width pairs are 5120/128 and 256/32.");
+ 
+   std::map<std::string, const Tensor *> by_name;
+   std::vector<std::pair<const Tensor *, Use>> committed;
+@@ -1296,15 +1297,17 @@ inline std::vector<Job> plan(std::vector<Shard> &shards) {
+         fail(Status::container, shard.path + ": entry " + std::to_string(i + 1) + " of the tensor table has the same " +
+                                     "name as an earlier tensor of this command. Check that no file is named twice.");
+       }
+-      const Use use = classify(tensor.name, layers);
++      Use use = classify(tensor.name, layers);
++      if (small && !use.norm.empty())
++        use.constant = use.constant == kQueryConstant ? 0x3E3504F3u : 0x3F800000u;
+       if (use.role == Role::ignored) continue;
+       // From here on a message may give the tensor's name, because the name has one of the
+       // forms that classify() knows. (The message in classify() gives only such a name.) In a
+       // damaged file, any other name can be tensor data: see read_shard().
+       if (use.role == Role::norm) {
+         if (tensor.type != kTypeF32) fail(Status::type, "The norm " + tensor.name + " must have the storage type F32.");
+-        if (tensor.elements != kWidth) {
+-          fail(Status::container, "The norm " + tensor.name + " does not have 5120 elements.");
++        if (tensor.elements != width) {
++          fail(Status::container, "The norm " + tensor.name + " does not have embedding_length elements.");
+         }
+       } else {
+         if (tensor.type != kTypeF32 && tensor.type != kTypeQ4K && tensor.type != kTypeQ5K && tensor.type != kTypeQ6K &&
+@@ -1321,11 +1324,12 @@ inline std::vector<Job> plan(std::vector<Shard> &shards) {
+   std::vector<Job> jobs;
+   for (const auto &[tensor, use] : committed) {
+     Job job;
++    job.allow_zero = small;
+     job.tensor = tensor;
+     job.embedding = use.role == Role::embedding;
+     if (!use.norm.empty()) {
+-      if (tensor->dims[0] != kWidth) {
+-        fail(Status::container, "The tensor " + tensor->name + " reads a norm, so its first dimension must be 5120.");
++      if (tensor->dims[0] != width) {
++        fail(Status::container, "The tensor " + tensor->name + " reads a norm, so its first dimension must be embedding_length.");
+       }
+       const auto norm = by_name.find(use.norm);
+       if (norm == by_name.end()) {
+-- 
+2.43.0
+

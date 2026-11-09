@@ -1,0 +1,27 @@
+From 03cefccb9724c2e5892977b217235d91dbacc1b1 Mon Sep 17 00:00:00 2001
+From: why-research <why-research@localhost>
+Date: Sun, 8 Nov 2026 18:16:35 -0800
+Subject: [PATCH 07/12] exp/sm120 p07: h_idk<1> attribute 131072 -> 65536: the
+ attribute call itself fails on sm_120 whatever k is
+
+Semantics: Only the allowed maximum changes; each launch still asks for (4 << k) bytes. Tables with 10 < k <= 14 run exactly as before; k = 15 would stop with a CUDA launch error instead of running.
+---
+ prover/hiding/forest_table.cuh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/prover/hiding/forest_table.cuh b/prover/hiding/forest_table.cuh
+index 8ae09bc4..d6b4a4a4 100644
+--- a/prover/hiding/forest_table.cuh
++++ b/prover/hiding/forest_table.cuh
+@@ -478,7 +478,7 @@ struct ForestTable {
+     PA(et.Gcb, (((nlo << (kT - 5)) >> 14) + 2) * 1024, 2);
+     PA(et.X, 32ull << lmid, 2);
+     et.solo = solo;
+-    CK_ATTRIBUTE(h_idk<1>, cudaFuncAttributeMaxDynamicSharedMemorySize, 131072);
++    CK_ATTRIBUTE(h_idk<1>, cudaFuncAttributeMaxDynamicSharedMemorySize, 65536); // exp/sm120: was 131072 (> sm_120's 101,376 B); covers 4 << k for k <= 14; a k = 15 table now fails at its launch (CK)
+   }
+   // prove() needs this many elements of T at `room`, 256-byte aligned. Level l starts at element
+   // nlo (2^l - 1). Nothing there is needed between two calls.
+-- 
+2.43.0
+

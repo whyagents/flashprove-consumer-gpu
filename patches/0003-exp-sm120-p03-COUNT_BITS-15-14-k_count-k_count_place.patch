@@ -1,0 +1,28 @@
+From 44e1b988d4abcbc367c9c61968d47a9713668c6f Mon Sep 17 00:00:00 2001
+From: why-research <why-research@localhost>
+Date: Sun, 8 Nov 2026 17:53:34 -0800
+Subject: [PATCH 03/12] exp/sm120 p03: COUNT_BITS 15 -> 14: k_count /
+ k_count_places asked for 128 KiB of dynamic shared memory; sm_120 allows
+ 101,376 B per block
+
+Semantics: Exact integer histogram counts. k_count already splits identities over blockIdx.y (lib = min(iota, COUNT_BITS - k)); if iota + k + 1 > COUNT_BITS the existing two-pass path (one_walk_ = false) is taken. Counters are the same; a table with k > 14 stops with upstream's own message.
+---
+ prover/hash_commitment/hf_range_windows.cuh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/prover/hash_commitment/hf_range_windows.cuh b/prover/hash_commitment/hf_range_windows.cuh
+index bb02436b..718ad32f 100644
+--- a/prover/hash_commitment/hf_range_windows.cuh
++++ b/prover/hash_commitment/hf_range_windows.cuh
+@@ -698,7 +698,7 @@ struct RangeWindows {
+   size_t jobs() const { return jobs_.size(); }
+ 
+ private:
+-  static constexpr int COUNT_BITS = 15; // the counting kernel's bins: 2^15 words, 128 KiB of shared memory
++  static constexpr int COUNT_BITS = 14; // the counting kernel's bins: 2^14 words, 64 KiB of shared memory (exp/sm120: was 15, 128 KiB > sm_120's 99 KiB per block)
+   static constexpr size_t NO_UNIT = ~(size_t)0, NOT_COVERED = ~(size_t)0 - 1;
+   struct Unit {
+     ::hfw::FoldUnit u;  // index rules; each `step` is for the model file's order
+-- 
+2.43.0
+

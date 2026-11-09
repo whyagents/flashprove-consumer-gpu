@@ -1,0 +1,27 @@
+start=2026-11-09T14:42:45Z head=cee61ddfc7aa6274df37beb769799fdbb86d7328
+Build cuda_13.2.r13.2/compiler.37953736_0
+verifier_build_exit=0
+default_build_exit=0
+end=2026-11-09T14:52:10Z
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 8:49.34
+	Maximum resident set size (kbytes): 2696824
+last_line=THE PROGRAMS ARE BUILT: cp_commit, cp_prove and cp_verify lie in $HOME/cleanroom/fp-prover/prover/build/hc
+total 63996
+drwxr-xr-x 3 user user     4096 Nov  9 06:52 .
+drwxr-xr-x 3 user user     4096 Nov  9 06:52 ..
+-rwxr-xr-x 1 user user 15493464 Nov  9 06:47 cp_commit
+-rw-r--r-- 1 user user     7593 Nov  9 06:47 cp_commit.build
+-rwxr-xr-x 1 user user 47250192 Nov  9 06:52 cp_prove
+-rw-r--r-- 1 user user     9608 Nov  9 06:52 cp_prove.build
+-rwxr-xr-x 1 user user  2750592 Nov  9 06:52 cp_verify
+drwxr-xr-x 2 user user     4096 Nov  8 20:50 test_build
+1b39a3d9da06d4a632b7c3a1e94395e71788131e078469c939a24f101f9238fe  $HOME/cleanroom/fp-prover/prover/build/hc/cp_commit
+0a64a28d06858cd3b11a067d3488a8b9433f2722a86e32a00001bb4c574248a8  $HOME/cleanroom/fp-prover/prover/build/hc/cp_prove
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/cleanroom/fp-prover/prover/build/hc/cp_verify
+build.sh: note: each of the two programs will load the CUDA libraries from $HOME/cleanroom/cuda-13.2.86/nvidia/cu13/lib, and $HOME/cleanroom/cuda-13.2.86/nvidia/cu13/lib belongs to user, not to root: whoever can write there chooses code that the program loads, no matter who runs it or where it is copied; see prover/docs/build.md.
+build.sh: note: serving_cp_commit will load the CUDA libraries from $HOME/cleanroom/cuda-13.2.86/nvidia/cu13/lib, and $HOME/cleanroom/cuda-13.2.86/nvidia/cu13/lib belongs to user, not to root: whoever can write there chooses code that the program loads, no matter who runs it or where it is copied; see prover/docs/build.md.
+build.sh: note: serving_cp_prove will load the CUDA libraries from $HOME/cleanroom/cuda-13.2.86/nvidia/cu13/lib, and $HOME/cleanroom/cuda-13.2.86/nvidia/cu13/lib belongs to user, not to root: whoever can write there chooses code that the program loads, no matter who runs it or where it is copied; see prover/docs/build.md.
+compiler_warning_lines=72
+      7 warning #177-D
+     36 warning #20011-D
+     29 warning #550-D

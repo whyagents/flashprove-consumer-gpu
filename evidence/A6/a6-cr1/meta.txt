@@ -1,0 +1,15 @@
+run=cr1 start=2026-11-09T04:51:07Z cleanroom_head=cee61ddfc7aa6274df37beb769799fdbb86d7328 verifier_head=9e2bdd8ff5bf9c62f18263d7dac189b0400b260c
+223f87526914305f834a1583e98371be8fb3ef19b867f838633b43266f8dfafc  $HOME/cleanroom/fp-prover/prover/build/hc/test_build/cp_commit
+6548c5d211cb0524f6edabc6859b8dd3f204c562cf3ab0486748fb0f658c9eb5  $HOME/cleanroom/fp-prover/prover/build/hc/test_build/cp_prove
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/cleanroom/fp-verifier/bin/cp_verify
+gpu_before=574 MiB, 16303 MiB
+run_target_example_exit=0
+last_line=YES
+end=2026-11-09T04:51:30Z
+total_Elapsed (wall clock) time (h:mm:ss or m:ss): 0:23.05
+--- cp_verify.log (clean-room verifier, via upstream's example script)
+covered: r=15 e=64 T=64 C=256 theta=256 cap=0 s=16 sh=8 positions=15..63 tokens=16..63 y=yes next-token=no policy=exact-match above-clip=0 (places in the request, counted from 0; y=yes: the answer is about y too; it is about nothing else; above-clip: so many of the tokens named by tokens= may cost more than C, and such a token may be any token. It is no limit on the tokens that may be any token: one that costs C or less may be any token too where the committed model's logits lie close together, and no verifier sees that. All costs, each counted as at most C, add up to at most theta times the number of these tokens)
+commitment: 49 closeness rounds of the one-time files rest on another source than the bound within a third of the distance; the table has a record: the binding of the weights rests on the theorem on codes (ePrint 2025/2055, Theorem 4.6), taken as given
+proof of work: up to 32 bits counted in 38 rounds; with it the least round has 128.00 bits, without it 96.23 bits
+result-v1 status=0 claim=exact-match id=565c612e40cf645e5f72f86fc44a5b874a2bf8a67f8f70858d85f5257b7d3a2a bits=128 work=32 work-rounds=38 least-round=128.00 least-round-without-work=96.23 commitment-assumed-rounds=49 record=1 r=15 e=64 T=64 tokens=16..63 y=yes policy=exact-match C=256 theta=256 cap=0 s=16 sh=8 sT=4 F=24 above-clip=0 leaf=0 stages=key,leaf,request dw=8 build=93afdaf592393a54ebd17b681d1c03295eb883f0161ff0e6ab872a3b39939595
+YES

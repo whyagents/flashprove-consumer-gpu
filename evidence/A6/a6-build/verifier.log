@@ -1,0 +1,4 @@
+build=93afdaf592393a54ebd17b681d1c03295eb883f0161ff0e6ab872a3b39939595 dw=8
+compiling cp_verify.cpp: one compiler call of one to two minutes, which prints nothing while it runs
+build.sh: overwrote the cp_verify that was already in $HOME/cleanroom/fp-verifier/bin. To keep a cp_verify from elsewhere, build into another directory: end the call with "- DIRECTORY"
+THE VERIFIER IS BUILT: $HOME/cleanroom/fp-verifier/bin/cp_verify

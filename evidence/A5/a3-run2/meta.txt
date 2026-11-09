@@ -1,0 +1,29 @@
+run=run2 start=2026-11-09T01:56:50Z
+sm120_head=44e1b988d4abcbc367c9c61968d47a9713668c6f pristine_head=9e2bdd8ff5bf9c62f18263d7dac189b0400b260c
+4a5c5210b40afbb45495e0f9aa8780e2d8f1ac25c90e936837de8a912d3e2a19  $HOME/work/flashprove-sm120/prover/build/hc/test_build/cp_commit
+e4c16fd069c5e104e3cd90ba56358eab591c7b63ae68eb8c048f567f7d089c77  $HOME/work/flashprove-sm120/prover/build/hc/test_build/cp_prove
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/work/flashprove/bin/cp_verify
+gpu_before=538 MiB, 16303 MiB
+host_mem_before=Mem:           15853         842       14693           4         640       15011
+run_target_example_exit=1
+last_line=	Exit status: 0
+end=2026-11-09T01:56:55Z
+vram_peak_MiB=8807 samples=15
+total_Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.02
+total_Maximum resident set size (kbytes): 862644
+--- cp_commit.log: last 15 lines
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 862644
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1057
+	Minor (reclaiming a frame) page faults: 274274
+	Voluntary context switches: 3571
+	Involuntary context switches: 16
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

@@ -1,0 +1,46 @@
+name: Replication report
+description: You ran the kit on your machine. Successes and failures are both welcome.
+title: "[replication] <GPU> / <OS>: <YES | NO | failed at step N>"
+labels: ["replication"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you! Please paste outputs exactly. **Never paste anything from `isk/`**: that is the prover's secret.
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU, VRAM and driver
+      placeholder: "RTX 4090 24 GB, driver 610.xx"
+    validations: { required: true }
+  - type: input
+    id: os
+    attributes:
+      label: OS (native Linux or WSL2), CPU, RAM
+      placeholder: "Ubuntu 24.04 native, Ryzen 9 7950X, 64 GB"
+    validations: { required: true }
+  - type: dropdown
+    id: experiment
+    attributes:
+      label: Which experiment
+      options: ["Synthetic example, test build", "Synthetic example, production build", "TinyStories260K (A9)", "Other"]
+    validations: { required: true }
+  - type: textarea
+    id: verdict
+    attributes:
+      label: "cp_verify: exit code and LAST LINE, plus the covered: and result-v1 lines"
+      render: text
+    validations: { required: true }
+  - type: input
+    id: ids
+    attributes:
+      label: Commitment ID (from your cp_commit) and answer token
+  - type: textarea
+    id: changes
+    attributes:
+      label: Anything you had to change (patches, flags, paths), and where it failed if it did
+      render: text
+  - type: input
+    id: verifier
+    attributes:
+      label: sha256 of your pristine bin/cp_verify

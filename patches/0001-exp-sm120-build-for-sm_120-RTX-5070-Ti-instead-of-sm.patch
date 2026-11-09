@@ -1,0 +1,28 @@
+From ca7e726611f817958cd599b0d2ffb61172f6b608 Mon Sep 17 00:00:00 2001
+From: why-research <why-research@localhost>
+Date: Sun, 8 Nov 2026 17:28:11 -0800
+Subject: [PATCH 01/12] exp/sm120: build for sm_120 (RTX 5070 Ti) instead of
+ sm_90a
+
+Only the nvcc architecture flag changes. Native SASS keeps nvcc 13.2.86 as the
+code generator (an sm_90a build runs on sm_120 only through driver PTX JIT).
+---
+ prover/build.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/prover/build.sh b/prover/build.sh
+index fa5d3c52..8a38db77 100755
+--- a/prover/build.sh
++++ b/prover/build.sh
+@@ -614,7 +614,7 @@ tools() {
+   file_of device-compiler "$middle/cicc" || return 1
+   file_of device-assembler "$(PATH=$looks command -v ptxas)"
+ }
+-nvcc_base=(nvcc -O3 -std=c++17 -arch=sm_90a --extended-lambda --default-stream per-thread -I. -Xcompiler -fno-ipa-modref -DCCCL_DISABLE_NVTX -DDIGEST_WORDS=$dw)
++nvcc_base=(nvcc -O3 -std=c++17 -arch=sm_120 --extended-lambda --default-stream per-thread -I. -Xcompiler -fno-ipa-modref -DCCCL_DISABLE_NVTX -DDIGEST_WORDS=$dw)
+ # -fno-ipa-modref, for the host compiler here and in the g++ lines below, works around a bug in g++
+ # 13.3.0, which can silently delete the stores that fill an object passed by reference
+ # (verifier/tests/compiler_pass_control.sh reproduces it). cuBLASLt is for
+-- 
+2.43.0
+

@@ -1,0 +1,16 @@
+--- honest (expected: exit 0, YES)
+honest           exit=0   last="YES" time=0.73 s 157176 kB
+honest2          exit=0   last="YES" time=0.72 s 157212 kB
+--- tampered (expected: non-zero exit, a NO line)
+proof-bit        exit=1   last="NO: proof-refused" time=Command exited with non-zero status 1
+0.54 s 139472 kB
+proof-short      exit=1   last="NO: proof-refused" time=Command exited with non-zero status 1
+0.71 s 157252 kB
+req-bit          exit=1   last="NO: proof-refused" time=Command exited with non-zero status 1
+0.33 s 89296 kB
+y-plus-1         exit=1   last="NO: reply-differs" time=Command exited with non-zero status 1
+0.67 s 157140 kB
+wrong-id         exit=1   last="NO: model-statement" time=Command exited with non-zero status 1
+0.17 s 40796 kB
+other-ivk        exit=1   last="NO: model-statement" time=Command exited with non-zero status 1
+0.19 s 40856 kB

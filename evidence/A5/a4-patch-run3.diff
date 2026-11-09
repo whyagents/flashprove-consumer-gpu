@@ -1,0 +1,52 @@
+diff --git a/prover/build.sh b/prover/build.sh
+index fa5d3c52..8a38db77 100755
+--- a/prover/build.sh
++++ b/prover/build.sh
+@@ -614,7 +614,7 @@ tools() {
+   file_of device-compiler "$middle/cicc" || return 1
+   file_of device-assembler "$(PATH=$looks command -v ptxas)"
+ }
+-nvcc_base=(nvcc -O3 -std=c++17 -arch=sm_90a --extended-lambda --default-stream per-thread -I. -Xcompiler -fno-ipa-modref -DCCCL_DISABLE_NVTX -DDIGEST_WORDS=$dw)
++nvcc_base=(nvcc -O3 -std=c++17 -arch=sm_120 --extended-lambda --default-stream per-thread -I. -Xcompiler -fno-ipa-modref -DCCCL_DISABLE_NVTX -DDIGEST_WORDS=$dw)
+ # -fno-ipa-modref, for the host compiler here and in the g++ lines below, works around a bug in g++
+ # 13.3.0, which can silently delete the stores that fill an object passed by reference
+ # (verifier/tests/compiler_pass_control.sh reproduces it). cuBLASLt is for
+diff --git a/prover/engine/tiled.cuh b/prover/engine/tiled.cuh
+index 0505fecd..517fdd5a 100644
+--- a/prover/engine/tiled.cuh
++++ b/prover/engine/tiled.cuh
+@@ -95,7 +95,7 @@ constexpr unsigned TILED_THREADS = 256;
+ constexpr unsigned TILED_M = 128, TILED_N = 128; // a block's planes, and its rows of columns' bytes
+ constexpr unsigned TILED_COLUMNS = TILED_N / 8;
+ constexpr unsigned TILED_STEP = 128;              // places copied to shared memory in one step
+-constexpr unsigned TILED_STAGES = 3;
++constexpr unsigned TILED_STAGES = 2; // exp/sm120: was 3; 3 x 36,864 B = 110,592 B > sm_120's 101,376 B per block
+ constexpr unsigned TILED_PARTS = TILED_STEP / 16; // 16-byte pieces of one row in a step
+ constexpr unsigned TILED_PITCH = TILED_STEP + 16; // bytes from one row of a tile to the next
+ constexpr unsigned TILED_STAGE_BYTES = (TILED_M + TILED_N) * TILED_PITCH;
+diff --git a/prover/hash_commitment/hf_range_windows.cuh b/prover/hash_commitment/hf_range_windows.cuh
+index bb02436b..718ad32f 100644
+--- a/prover/hash_commitment/hf_range_windows.cuh
++++ b/prover/hash_commitment/hf_range_windows.cuh
+@@ -698,7 +698,7 @@ struct RangeWindows {
+   size_t jobs() const { return jobs_.size(); }
+ 
+ private:
+-  static constexpr int COUNT_BITS = 15; // the counting kernel's bins: 2^15 words, 128 KiB of shared memory
++  static constexpr int COUNT_BITS = 14; // the counting kernel's bins: 2^14 words, 64 KiB of shared memory (exp/sm120: was 15, 128 KiB > sm_120's 99 KiB per block)
+   static constexpr size_t NO_UNIT = ~(size_t)0, NOT_COVERED = ~(size_t)0 - 1;
+   struct Unit {
+     ::hfw::FoldUnit u;  // index rules; each `step` is for the model file's order
+diff --git a/prover/prover/base.cuh b/prover/prover/base.cuh
+index 3618df79..1bb20871 100644
+--- a/prover/prover/base.cuh
++++ b/prover/prover/base.cuh
+@@ -275,7 +275,7 @@ static inline void ws_of(int xl, const long long *xst, int T_, int d, int NI, lo
+   if (xl == 5)
+     k_ws<5, 16><<<dim3((T_ + 31) / 32, NI), dim3(32, 16)>>>(xst, T_, d, Ws);
+   else
+-    k_ws<4, 32><<<dim3((T_ + 31) / 32, NI), dim3(32, 32)>>>(xst, T_, d, Ws);
++    k_ws<4, 16><<<dim3((T_ + 31) / 32, NI), dim3(32, 16)>>>(xst, T_, d, Ws); // exp/sm120: was <4, 32>, whose 59,136 B of static shared memory exceed sm_120's 48 KiB
+ }
+ // o[q] = sum_t e[t] * fn(q, t), masked. o must point into the sub-proof's message array: what is
+ // stored is the sum plus the mask entry of the slot o + q, a random element (sc_door::claim(),

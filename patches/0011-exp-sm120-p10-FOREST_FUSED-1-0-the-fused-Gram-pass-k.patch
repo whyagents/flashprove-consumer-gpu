@@ -1,0 +1,27 @@
+From 85742f8d26588ed3faffd46eab0ef578db0bb95b Mon Sep 17 00:00:00 2001
+From: why-research <why-research@localhost>
+Date: Sun, 8 Nov 2026 18:31:38 -0800
+Subject: [PATCH 11/12] exp/sm120 p10: FOREST_FUSED 1 -> 0: the fused Gram-pass
+ kernels need more shared memory than sm_120 has (k_stored: 219,136 B)
+
+Semantics: Upstream's documented other mode: a pass writes its digits to GPU memory and cublasLtMatmul multiplies them (gram_products.cuh). The file's own comment says all sums are exact, so both methods give the same elements. Less exercised upstream: only prover/tests/forest_lookup_bench.cu flips it.
+---
+ prover/hiding/forest.cuh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/prover/hiding/forest.cuh b/prover/hiding/forest.cuh
+index b43f2232..ace5fe8a 100644
+--- a/prover/hiding/forest.cuh
++++ b/prover/hiding/forest.cuh
+@@ -80,7 +80,7 @@ static bool forest_small_tails = false;
+ // value; one benchmark, prover/tests/forest_lookup_bench.cu, flips it to compare the two (no test
+ // that SUITE.md lists runs it).
+ #ifndef FOREST_FUSED
+-#define FOREST_FUSED 1
++#define FOREST_FUSED 0 // exp/sm120: was 1; the fused kernels (forest_fused*.cuh) are tiled for sm_90, e.g. k_stored asks for 219,136 B of shared memory
+ #endif
+ static bool forest_fused = FOREST_FUSED != 0;
+ // Whether the key side leaves out the padding declared to Forest::counts(). A test can set it to
+-- 
+2.43.0
+

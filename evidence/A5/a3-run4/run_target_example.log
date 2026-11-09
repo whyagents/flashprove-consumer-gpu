@@ -1,0 +1,17 @@
+   $ cd $HOME/work/a3/run4
+1. The public configuration: the parameter file, the scales, the layout of a proof's arrays
+   $ cp $HOME/work/flashprove-sm120/prover/examples/target_small_f2_roomy/policy.txt $HOME/work/flashprove-sm120/prover/examples/target_small_f2_roomy/KL.bin $HOME/work/flashprove-sm120/prover/examples/target_small_f2_roomy/layout.txt config/
+2. cp_commit draws a seed and commits to the weights: ivk/ is for the clients, isk/ stays with the provider
+   $ /usr/bin/time -v $HOME/work/a3/progs/cp_commit -weights made-up-blocks -config config -M 1 -ivk ivk -isk isk > cp_commit.log 2>&1
+   the commitment's ID, to be published: d84ef588a29bfa83af537d1a5b7b1aadf66c22b8390ff58ad29b6a196ec37c63
+3. The request: a made-up prompt, the model's own first choices after it, and the question whether each of them is that, and which token comes next
+   $ cp $HOME/work/flashprove-sm120/prover/examples/target_small_f2_roomy/own_choices.req in/example.req
+4. cp_prove runs the model on the request and writes the answer and its proof
+   $ /usr/bin/time -v env HOME=$HOME/work/a3/run4/home TMPDIR=$HOME/work/a3/run4/tmp $HOME/work/a3/progs/cp_prove -isk $HOME/work/a3/run4/isk -in $HOME/work/a3/run4/in -out $HOME/work/a3/run4/out > cp_prove.log 2>&1
+run_target_example.sh: this step failed with status 1; the last lines of $HOME/work/a3/run4/cp_prove.log:
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+run_target_example.sh: cp_prove can fail after it has written a response, and no verifier has seen what lies in $HOME/work/a3/run4/out. Give no one anything from it, and keep it as secret as $HOME/work/a3/run4/isk: a response that cp_verify has not accepted can hold unmasked values (docs/limits.md, "What a provider must do", duty 6)

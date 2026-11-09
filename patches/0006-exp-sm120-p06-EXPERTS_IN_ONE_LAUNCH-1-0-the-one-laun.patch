@@ -1,0 +1,28 @@
+From 70f00fe37494a657fa0e7586b275fa4369d776d3 Mon Sep 17 00:00:00 2001
+From: why-research <why-research@localhost>
+Date: Sun, 8 Nov 2026 18:05:57 -0800
+Subject: [PATCH 06/12] exp/sm120 p06: EXPERTS_IN_ONE_LAUNCH 1 -> 0: the
+ one-launch MoE kernel k_grouped_blocks needs > 132 KB of dynamic shared
+ memory (its static_assert names compute capability 9.0's 227 KB)
+
+Semantics: Selects upstream's own other form: the host loop over experts, which calls cuBLAS int8 GEMMs (exact on sm_120 per the A2 probe). Upstream's comment: 'Both forms are meant to give the same sums.'
+---
+ prover/weights_blocks/experts.cuh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/prover/weights_blocks/experts.cuh b/prover/weights_blocks/experts.cuh
+index d44cb1df..f771a9cb 100644
+--- a/prover/weights_blocks/experts.cuh
++++ b/prover/weights_blocks/experts.cuh
+@@ -48,7 +48,7 @@
+ // alone. Both forms are meant to give the same sums.
+ // Three tests that are not part of this repository compare the sums with a plain kernel's: two
+ // test the selected form, and one tests both forms (it builds only at 1).
+-#define EXPERTS_IN_ONE_LAUNCH 1
++#define EXPERTS_IN_ONE_LAUNCH 0 // exp/sm120: was 1; pk::Tile4<NL,NS>::SMEM is tiled for sm_90's 227 KB (two 66,048 B weight buffers alone exceed sm_120's 101,376 B)
+ #if EXPERTS_IN_ONE_LAUNCH
+ #include "weights_blocks/experts_in_one_launch.cuh"
+ #endif
+-- 
+2.43.0
+

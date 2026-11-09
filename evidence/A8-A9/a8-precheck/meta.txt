@@ -1,0 +1,15 @@
+date=2026-11-09T14:42:34Z head=cee61ddfc7aa6274df37beb769799fdbb86d7328 dirty=0
+sha_ni=sha_ni
+--- ldconfig
+	libcudadebugger.so.1 (libc6,x86-64) => /usr/lib/wsl/lib/libcudadebugger.so.1
+	libcuda.so.1 (libc6,x86-64) => /usr/lib/wsl/lib/libcuda.so.1
+--- gpu
+NVIDIA GeForce RTX 5070 Ti, 12.0, 610.88, 3288 MiB, 16303 MiB
+--- ulimit -l (locked memory, kB): 65536
+--- MemAvailable: MemAvailable:   15497500 kB
+--- kernel: 6.18.54.1-microsoft-standard-WSL2
+--- gcc: 13.3.0 g++: 13.3.0
+--- tools: /usr/bin/python3 /usr/bin/ld /usr/bin/nm /usr/bin/objcopy /usr/bin/strings /usr/bin/ldd /usr/bin/sha256sum /usr/bin/flock 
+--- bin/cp_verify in tree: 7f9efc1e86a848a3…
+--- prover/check_nvcc_version.sh
+exit=0

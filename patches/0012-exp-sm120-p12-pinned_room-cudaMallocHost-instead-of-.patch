@@ -1,0 +1,51 @@
+From 7b849bf7ab3e36956e971acfd260ed1c2a1fb109 Mon Sep 17 00:00:00 2001
+From: why-research <why-research@localhost>
+Date: Sun, 8 Nov 2026 18:43:49 -0800
+Subject: [PATCH 12/12] exp/sm120 p12: pinned_room: cudaMallocHost instead of
+ cudaHostRegister (WSL2: registered memory is not device-addressable by its
+ host pointer)
+
+Semantics: The same zeroed, page-locked host buffers, from another allocator. Only their device-accessibility under WSL2 changes; no value differs. Not needed on native Linux, where both allocators give memory that the GPU addresses at its host pointer.
+---
+ prover/hash_commitment/hf_keeper.cu | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/prover/hash_commitment/hf_keeper.cu b/prover/hash_commitment/hf_keeper.cu
+index 913e07d3..65eecff3 100644
+--- a/prover/hash_commitment/hf_keeper.cu
++++ b/prover/hash_commitment/hf_keeper.cu
+@@ -97,23 +97,26 @@ static bool a_unit_lives = false;
+ // Returns zeroed, pinned host memory, or null after a line on stderr. madvise() asks that it stay
+ // out of core dumps and forked children; its result is not checked.
+ // The memory starts at a multiple of 2 MiB, a huge page's size; no huge pages are asked for.
++// exp/sm120 (WSL2): cudaMallocHost instead of aligned_alloc + cudaHostRegister. Under WSL2,
++// cudaDevAttrCanUseHostPointerForRegisteredMem is 0: registered memory has another device address,
++// and hf_open_side.cuh's cudaMemsetAsync on u (a host pointer) failed with 'invalid argument'.
++// cudaMallocHost memory is device-accessible at its host address there (probe a4_pinned_probe).
+ static void *pinned_room(size_t bytes, const char *what) {
+   const size_t huge = (size_t)2 << 20, room = (bytes + huge - 1) / huge * huge;
+-  char *p = (char *)aligned_alloc(huge, room);
++  char *p = nullptr;
++  if (cudaMallocHost((void **)&p, room) != cudaSuccess) p = nullptr;
+   if (p) {
+     madvise(p, room, MADV_DONTDUMP);
+     madvise(p, room, MADV_DONTFORK);
+     zero_in_pieces(p, room);
++    return p;
+   }
+-  if (p && cudaHostRegister(p, room, cudaHostRegisterDefault) == cudaSuccess) return p;
+   fprintf(stderr, "the keeper of the weight table: %.3f GB of host memory for %s cannot be had or pinned\n", room / 1e9, what);
+-  free(p);
+   return nullptr;
+ }
+ static void pinned_back(void *p) {
+   if (!p) return;
+-  cudaHostUnregister(p);
+-  free(p);
++  cudaFreeHost(p);
+ }
+ 
+ class Unit : public ::hf::HfKeeperUnit {
+-- 
+2.43.0
+

@@ -1,0 +1,9 @@
+start=2026-11-09T14:56:57Z head=aa59d9307dab208196e56c63621153537f4c9e83
+verifier_build_exit=0
+default_build_exit=0
+end=2026-11-09T15:06:12Z
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 8:38.85
+last_line=THE PROGRAMS ARE BUILT: cp_commit, cp_prove and cp_verify lie in $HOME/cleanroom/build-real/hc
+e69a95c4717c5bf2ad71ad577206205e83ee88ed826672ccc08999fe46a2d436  $HOME/cleanroom/build-real/hc/cp_commit
+c351fcac8fe66dd257237cf51c164c0cbd359b76a4d87753b5d2fe747591d20a  $HOME/cleanroom/build-real/hc/cp_prove
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/cleanroom/build-real/hc/cp_verify

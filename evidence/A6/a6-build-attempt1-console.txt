@@ -1,0 +1,32 @@
+start=2026-11-09T04:28:58Z nvcc=$HOME/cleanroom/cuda-13.2.86/nvidia/cu13/bin/nvcc
+Build cuda_13.2.r13.2/compiler.37953736_0
+verifier_build_exit=0
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/cleanroom/fp-verifier/bin/cp_verify
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/work/flashprove/bin/cp_verify
+verifier_clone_dirty=0
+tests_build_exit=1
+end=2026-11-09T04:39:30Z
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 9:56.88
+	Maximum resident set size (kbytes): 2712404
+sha256sum: $HOME/cleanroom/fp-prover/prover/build/hc/test_build/cp_commit: No such file or directory
+bc8497f4927165718fd415d8951ab342887dfcf7cca1e7c4c2cf5fc90ab000cd  $HOME/cleanroom/fp-prover/prover/build/hc/test_build/cp_prove
+a5_build: 699be8b70477a7cfd56c558d9f1b7bf5090ccbe16cba0ed1bf8bf797bf5066e5  $HOME/work/flashprove-sm120/prover/build/hc/test_build/cp_commit
+a5_build: 668facc73aa6158286d5eb47423bde3c570a4b12bacca4b6a44c16789a3b149b  $HOME/work/flashprove-sm120/prover/build/hc/test_build/cp_prove
+--- last 15 lines of the tests build
+
+./common/zeroing_heap.h(84): warning #20011-D: calling a __host__ function("zeroing_heap_give(void *)") from a __host__ __device__ function("operator delete[] ") is not allowed
+
+./common/zeroing_heap.h(87): warning #20011-D: calling a __host__ function("zeroing_heap_give(void *)") from a __host__ __device__ function("operator delete ") is not allowed
+
+./common/zeroing_heap.h(90): warning #20011-D: calling a __host__ function("zeroing_heap_give(void *)") from a __host__ __device__ function("operator delete[] ") is not allowed
+
+./common/zeroing_heap.h(93): warning #20011-D: calling a __host__ function("zeroing_heap_give(void *)") from a __host__ __device__ function("operator delete ") is not allowed
+
+./common/zeroing_heap.h(96): warning #20011-D: calling a __host__ function("zeroing_heap_give(void *)") from a __host__ __device__ function("operator delete[] ") is not allowed
+
+cp: cannot stat '$HOME/cleanroom/fp-prover/prover/../bin/cp_verify': No such file or directory
+build.sh: cp_commit wants a cp_verify beside it, a copy of ../bin/cp_verify: build the verifier first
+build.sh: cp_commit failed with status 1; not installed: cp_commit. This call has replaced and removed nothing in $HOME/cleanroom/fp-prover/prover/build.
+build.sh: tests failed with status 1. A call for a single program that failed says so above. One that ended well has installed its program, so $HOME/cleanroom/fp-prover/prover/build may now hold programs of two builds. Build again.
+
+[exited with code 0]

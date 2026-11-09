@@ -1,0 +1,4 @@
+PROBE attrs INFO unifiedAddressing=1 canMapHostMemory=1 pageableMemoryAccess=0 hostRegisterSupported=1 canUseHostPointerForRegisteredMem=0
+PROBE cudaMallocHost         PASS ptr_attr=no error type=1 devPtr=no error same=1 | memsetAsync=no error sync=no error zeroed=1 | kernel_write launch=no error sync=no error written=1
+PROBE cudaHostAlloc(Mapped)  PASS ptr_attr=no error type=1 devPtr=no error same=1 | memsetAsync=no error sync=no error zeroed=1 | kernel_write launch=no error sync=no error written=1
+PROBE cudaHostRegister       FAIL ptr_attr=no error type=1 devPtr=no error same=0 | memsetAsync=invalid argument sync=no error zeroed=0 | kernel_write launch=no error sync=an illegal memory access was encountered written=0

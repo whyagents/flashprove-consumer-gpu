@@ -1,0 +1,11 @@
+apply_check_exit=0
+apply_exit=0
+head=aa59d9307dab208196e56c63621153537f4c9e83 branch=real-model
+ prover/hash_commitment/hf_commit_weights.cuh |  2 +-
+ prover/weights_blocks/gguf_source.cuh        |  9 +++++----
+ prover/weights_commitment/fold_source.cuh    |  5 +++--
+ prover/weights_commitment/fold_weights.cuh   | 15 ++++++++++-----
+ prover/weights_commitment/worst_case.cuh     | 19 +++++++++++++++++++
+ weight_sums/weight_sums.cpp                  | 28 ++++++++++++++++------------
+ 6 files changed, 54 insertions(+), 24 deletions(-)
+verifier_files_changed=0

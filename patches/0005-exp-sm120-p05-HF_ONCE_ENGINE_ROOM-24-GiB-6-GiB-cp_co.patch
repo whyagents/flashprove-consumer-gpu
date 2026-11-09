@@ -1,0 +1,28 @@
+From d69b1e0a81c58443d94a082107a97e90a2453377 Mon Sep 17 00:00:00 2001
+From: why-research <why-research@localhost>
+Date: Sun, 8 Nov 2026 18:01:29 -0800
+Subject: [PATCH 05/12] exp/sm120 p05: HF_ONCE_ENGINE_ROOM 24 GiB -> 6 GiB:
+ cp_commit reserved 24 GiB of GPU memory for the engine, whatever the model's
+ size, and stopped (exit 2) on a 16 GB card
+
+Semantics: A memory budget only. Upstream's comment at the constant: 'No byte of an output file depends on this number'; with less room, fewer columns are recomputed in a pass. The run's last line prints the engine pool's real peak.
+---
+ prover/hash_commitment/hf_commit_once.cuh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/prover/hash_commitment/hf_commit_once.cuh b/prover/hash_commitment/hf_commit_once.cuh
+index d781f88c..fce0a273 100644
+--- a/prover/hash_commitment/hf_commit_once.cuh
++++ b/prover/hash_commitment/hf_commit_once.cuh
+@@ -305,7 +305,7 @@ struct HfOncePool {
+ // recomputed in a pass to leave it. No formula gives what the engine needs, and much less than
+ // this can be too little. The run's last line
+ // prints the peak of the engine's pool. No byte of an output file depends on this number.
+-constexpr size_t HF_ONCE_ENGINE_ROOM = (size_t)24 << 30;
++constexpr size_t HF_ONCE_ENGINE_ROOM = (size_t)6 << 30; // exp/sm120: was 24 GiB, more than a 16 GB card holds
+ // Added to the slab's computed size: while the slab exists, other code's small buffers come out of
+ // it too, since cudaMalloc is lent_memory.h's macro in the whole translation unit.
+ constexpr size_t HF_ONCE_SLAB_SPARE = (size_t)1 << 30;
+-- 
+2.43.0
+

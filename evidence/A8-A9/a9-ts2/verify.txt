@@ -1,0 +1,15 @@
+verifier_sha256=7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394 id_from_our_cp_commit=ecdafc8426511e4c18420c69585da0579fe6fe9362f6fb2f3b23a78ee98fd37e
+honest       exit=0   last="YES"
+proof-bit    exit=1   last="NO: proof-refused"
+req-bit      exit=1   last="NO: proof-refused"
+y-plus-1     exit=1   last="NO: reply-differs"
+l4-id        exit=1   last="NO: model-statement"
+l4-ivk       exit=1   last="NO: model-statement"
+--- honest report lines
+weight hiding: NOT CHECKED BY THIS RUN (it rests on how the commitment was made)
+accounting: hiding is a separate bound, in the numbers of queries and of proofs on one commitment, and is no part of these figures
+weight hiding: NOT CHECKED BY THIS CALL (it rests on how the commitment was made)
+covered: r=255 e=256 T=256 C=256 theta=256 cap=0 s=20 sh=8 positions=255..255 tokens=none y=yes next-token=yes policy=exact-match above-clip=0 (places in the request, counted from 0; y=yes: the answer is about y too; it is about nothing else; above-clip: so many of the tokens named by tokens= may cost more than C, and such a token may be any token. It is no limit on the tokens that may be any token: one that costs C or less may be any token too where the committed model's logits lie close together, and no verifier sees that. All costs, each counted as at most C, add up to at most theta times the number of these tokens)
+commitment: 47 closeness rounds of the one-time files rest on another source than the bound within a third of the distance; the table has a record: the binding of the weights rests on the theorem on codes (ePrint 2025/2055, Theorem 4.6), taken as given
+proof of work: up to 8 bits counted in 40 rounds; with it the least round has 128.00 bits, without it 120.31 bits
+result-v1 status=0 claim=next-token id=ecdafc8426511e4c18420c69585da0579fe6fe9362f6fb2f3b23a78ee98fd37e bits=128 work=8 work-rounds=40 least-round=128.00 least-round-without-work=120.31 commitment-assumed-rounds=47 record=1 r=255 e=256 T=256 tokens=none y=yes policy=exact-match C=256 theta=256 cap=0 s=20 sh=8 sT=4 F=24 above-clip=0 leaf=0 stages=key,leaf,request dw=8 build=93afdaf592393a54ebd17b681d1c03295eb883f0161ff0e6ab872a3b39939595

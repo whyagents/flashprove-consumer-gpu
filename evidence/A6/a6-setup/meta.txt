@@ -1,0 +1,26 @@
+patch files: 12
+git_am_exit=0
+cleanroom_head=cee61ddfc7aa6274df37beb769799fdbb86d7328 commits_on_pin=12
+cleanroom_tree=c4a72cd21e4f9ca8aed6d48d04ea54099314be4e
+exp_sm120_tree=c4a72cd21e4f9ca8aed6d48d04ea54099314be4e
+trees_equal=yes
+--- diff --stat pin..HEAD
+ prover/build.sh                             |  2 +-
+ prover/engine/fold.cuh                      |  4 ++--
+ prover/engine/tiled.cuh                     |  2 +-
+ prover/hash_commitment/hf_commit_once.cuh   |  2 +-
+ prover/hash_commitment/hf_keeper.cu         | 13 ++++++++-----
+ prover/hash_commitment/hf_range_windows.cuh |  2 +-
+ prover/hiding/count_keys16.cuh              | 15 ++++++++-------
+ prover/hiding/forest.cuh                    |  2 +-
+ prover/hiding/forest_keys.cuh               | 14 ++++++++------
+ prover/hiding/forest_table.cuh              |  2 +-
+ prover/prover/base.cuh                      |  2 +-
+ prover/weights_blocks/experts.cuh           |  2 +-
+ 12 files changed, 34 insertions(+), 28 deletions(-)
+verifier_dir_changed_by_patches=0
+verifier_clone_head=9e2bdd8ff5bf9c62f18263d7dac189b0400b260c dirty=0
+pip_exit=0
+Cuda compilation tools, release 13.2, V13.2.86
+Build cuda_13.2.r13.2/compiler.37953736_0
+cuda_du=957M

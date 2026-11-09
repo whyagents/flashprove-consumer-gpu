@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+title: "Provable AI inference on a consumer GPU: FlashProve on an RTX 5070 Ti"
+message: "If you use this work, please cite it as below."
+type: software
+authors:
+  - name: "WHY Research (Ockams, Inc.)"
+repository-code: "https://github.com/whyagents/flashprove-consumer-gpu"
+url: "https://why.com/research.html"
+license: Apache-2.0
+date-released: "2026-11-09"
+keywords:
+  - zero-knowledge proofs
+  - provable inference
+  - zkML
+  - FlashProve
+  - consumer GPU
+  - AI agents
+references:
+  - type: software
+    title: "FlashProve"
+    authors:
+      - name: "Anthropic PBC"
+    repository-code: "https://github.com/anthropics/FlashProve"
+    commit: "9e2bdd8ff5bf9c62f18263d7dac189b0400b260c"
+  - type: software
+    title: "FlashProve-L4"
+    authors:
+      - name: "zkwasm"
+    repository-code: "https://github.com/zkwasm/FlashProve-L4"
+    commit: "eac41543adb3e287e3d98c3c657b8f3cc7b64bb1"

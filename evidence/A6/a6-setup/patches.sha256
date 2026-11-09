@@ -1,0 +1,12 @@
+3822005745fb777e77d4b20f6466b001d493921209f900fcf7ae0a210b0f9ca2  0001-exp-sm120-build-for-sm_120-RTX-5070-Ti-instead-of-sm.patch
+1f6f9cb913426008e9e0c91557f78b0ed6020ae45ba465777a1ff9141e4e99b1  0002-exp-sm120-k_ws-4-16-instead-of-4-32-static-shared-me.patch
+5d28ddd147430cdc52e3dbc3f26f3d34ffbf75c9427f9deb5579702968d8cd2c  0003-exp-sm120-p03-COUNT_BITS-15-14-k_count-k_count_place.patch
+166c868b140fd6f6d00c0a7ae23269cdd7f9ee11cd79401b6ce40d4278899780  0004-exp-sm120-p04-TILED_STAGES-3-2-k_tiled_multiply-aske.patch
+2709738e2ba9eedb935b8544f4db59ed56401a735f2b13d4bf504d5199340127  0005-exp-sm120-p05-HF_ONCE_ENGINE_ROOM-24-GiB-6-GiB-cp_co.patch
+164b322326159b6b23abdf1a891d484f725945ab78db06ece05f5db3478b3a25  0006-exp-sm120-p06-EXPERTS_IN_ONE_LAUNCH-1-0-the-one-laun.patch
+bd528ab976de02262a4647db489ae50dceedf503c339aab308da1969abad8182  0007-exp-sm120-p07-h_idk-1-attribute-131072-65536-the-att.patch
+f68a643734e8854fefce99ce5b16df656ada0c1e1e20481f05bf612e2453c7b7  0008-exp-sm120-p08-k_count_keys16-4-passes-of-16384-bins-.patch
+0357eb88327afe360cb4d374fd779d4291209e62b043e8276b43734065738ed4  0009-exp-sm120-p09-k_fold_combine_bytes-limit-100-KiB-96-.patch
+88b3d8df3095eefa3cb867c37fa50d546514c889bb34c420ff574a1f509b45c6  0010-exp-sm120-p11-Form-PackedSrc-read-the-packed-table-f.patch
+35c327f31202e9ad1f541674df2d622cece505be24d69745faa712cc714b3dee  0011-exp-sm120-p10-FOREST_FUSED-1-0-the-fused-Gram-pass-k.patch
+8dff15506a3df12479e4576b912338e1e3024f3962fb667b937621cda28ce4f4  0012-exp-sm120-p12-pinned_room-cudaMallocHost-instead-of-.patch

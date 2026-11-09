@@ -1,0 +1,23 @@
+	Command being timed: "bash $HOME/cleanroom/fp-prover/prover/examples/run_target_example.sh target_small_f2_roomy $HOME/cleanroom/runs/cr2"
+	User time (seconds): 23.83
+	System time (seconds): 1.44
+	Percent of CPU this job got: 96%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:26.17
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 974060
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 279
+	Minor (reclaiming a frame) page faults: 730153
+	Voluntary context switches: 5911
+	Involuntary context switches: 111
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

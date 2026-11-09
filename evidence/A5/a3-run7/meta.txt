@@ -1,0 +1,45 @@
+run=run7 start=2026-11-09T02:30:54Z
+sm120_head=58d630928cd24cfdebb31437929f9c9420560739 pristine_head=9e2bdd8ff5bf9c62f18263d7dac189b0400b260c
+efcec11d9d398fb46b2c352dffdf368c645fe1062956675c8380e8712904dda0  $HOME/work/flashprove-sm120/prover/build/hc/test_build/cp_commit
+e4bb1160f064972eabdbbcda3d9bdc2beb23fbb6bf7e003d0d97a8578c66bda2  $HOME/work/flashprove-sm120/prover/build/hc/test_build/cp_prove
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/work/flashprove/bin/cp_verify
+gpu_before=523 MiB, 16303 MiB
+host_mem_before=Mem:           15853         939       13655           4        1589       14914
+run_target_example_exit=1
+last_line=run_target_example.sh: cp_prove can fail after it has written a response, and no verifier has seen what lies in $HOME/work/a3/run7/out. Give no one anything from it, and keep it as secret as $HOME/work/a3/run7/isk: a response that cp_verify has not accepted can hold unmasked values (docs/limits.md, "What a provider must do", duty 6)
+end=2026-11-09T02:31:20Z
+vram_peak_MiB=8794 samples=102
+total_Elapsed (wall clock) time (h:mm:ss or m:ss): 0:26.56
+total_Maximum resident set size (kbytes): 974640
+--- cp_commit.log: last 15 lines
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 974640
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 119
+	Minor (reclaiming a frame) page faults: 387998
+	Voluntary context switches: 3968
+	Involuntary context switches: 118
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+--- cp_prove.log: last 15 lines
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 750028
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 2
+	Minor (reclaiming a frame) page faults: 221463
+	Voluntary context switches: 1101
+	Involuntary context switches: 4
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1

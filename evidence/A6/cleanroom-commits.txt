@@ -1,0 +1,12 @@
+cee61ddf exp/sm120 p12: pinned_room: cudaMallocHost instead of cudaHostRegister (WSL2: registered memory is not device-addressable by its host pointer)
+3355b128 exp/sm120 p10: FOREST_FUSED 1 -> 0: the fused Gram-pass kernels need more shared memory than sm_120 has (k_stored: 219,136 B)
+717b6fb3 exp/sm120 p11: Form<PackedSrc>: read the packed table from global memory instead of staging 131,072 B in shared memory
+7d54808c exp/sm120 p09: k_fold_combine_bytes limit 100 KiB -> 96 KiB: its attribute (102,400 B) exceeds sm_120's per-block maximum
+1f0d03d8 exp/sm120 p08: k_count_keys16: 4 passes of 16384 bins (64 KiB) instead of 2 of 32768 (128 KiB)
+006c0c1f exp/sm120 p07: h_idk<1> attribute 131072 -> 65536: the attribute call itself fails on sm_120 whatever k is
+c3a4feee exp/sm120 p06: EXPERTS_IN_ONE_LAUNCH 1 -> 0: the one-launch MoE kernel k_grouped_blocks needs > 132 KB of dynamic shared memory (its static_assert names compute capability 9.0's 227 KB)
+58560212 exp/sm120 p05: HF_ONCE_ENGINE_ROOM 24 GiB -> 6 GiB: cp_commit reserved 24 GiB of GPU memory for the engine, whatever the model's size, and stopped (exit 2) on a 16 GB card
+ebf051f0 exp/sm120 p04: TILED_STAGES 3 -> 2: k_tiled_multiply asked for TILED_ROOM = 110,592 B of dynamic shared memory
+9a92f5db exp/sm120 p03: COUNT_BITS 15 -> 14: k_count / k_count_places asked for 128 KiB of dynamic shared memory; sm_120 allows 101,376 B per block
+6b4dbf90 exp/sm120: k_ws<4,16> instead of <4,32> (static shared memory 59,136 B > 48 KiB on sm_120)
+abb9da86 exp/sm120: build for sm_120 (RTX 5070 Ti) instead of sm_90a

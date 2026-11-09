@@ -1,0 +1,43 @@
+run=ts2 start=2026-11-09T15:11:43Z head=aa59d9307dab208196e56c63621153537f4c9e83 build=production model=TinyStories260K(L4 conversion)
+e69a95c4717c5bf2ad71ad577206205e83ee88ed826672ccc08999fe46a2d436  $HOME/cleanroom/build-real/hc/cp_commit
+c351fcac8fe66dd257237cf51c164c0cbd359b76a4d87753b5d2fe747591d20a  $HOME/cleanroom/build-real/hc/cp_prove
+36d8c24c3d4627dec3fe3bf2d0f79f5a9b0da1a4cebff513cd18b20fe435ca0a  $HOME/third_party/FlashProve-L4/models/stories260K/flashprove32/model.gguf
+cf17bc0215df1166149e0b2d6f406f2b49b3f6a2479f03857e40e4328b479d71  $HOME/cleanroom/runs/ts2/in/example.req
+dfc0071532d95acf71d2792e67207f9e0610b7e02ddfda41c9a685b03f7e2cc7  $HOME/cleanroom/runs/ts2/config/policy.txt
+gpu_before=1105 MiB, 16303 MiB
+cp_commit_exit=0 id=ecdafc8426511e4c18420c69585da0579fe6fe9362f6fb2f3b23a78ee98fd37e
+cp_prove_exit=0
+end=2026-11-09T15:11:50Z
+vram_peak_MiB=9465 samples=27
+cp_commit: Elapsed (wall clock) time (h:mm:ss or m:ss): 0:04.79
+cp_commit: Maximum resident set size (kbytes): 895848
+cp_prove: Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.96
+cp_prove: Maximum resident set size (kbytes): 961308
+answer_token=310 (L4 published: 310)
+proof_bytes=5602236
+--- cp_commit.log tail
+	Major (requiring I/O) page faults: 119
+	Minor (reclaiming a frame) page faults: 383570
+	Voluntary context switches: 2592
+	Involuntary context switches: 26
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+--- cp_prove.log tail
+	Major (requiring I/O) page faults: 10
+	Minor (reclaiming a frame) page faults: 273973
+	Voluntary context switches: 1443
+	Involuntary context switches: 11
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

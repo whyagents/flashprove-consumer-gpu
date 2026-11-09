@@ -1,0 +1,9 @@
+run=cr1 date=2026-11-09T04:51:30Z verifier_sha256=7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394 pristine_head=9e2bdd8ff5bf9c62f18263d7dac189b0400b260c
+commitment_id_from_our_cp_commit=565c612e40cf645e5f72f86fc44a5b874a2bf8a67f8f70858d85f5257b7d3a2a
+stored_example_id=79a5a2bc7a469b40df73dedf40abeb740671e8ae8077738bd3743897aeb22183 (must differ)
+74884e6dbad7c08f367099cd44f32718c19d09cbd08061e8124939fef6683f0e  $HOME/cleanroom/runs/cr1/out/example.proof
+871cd8edd0dbd8de891216d6409fba14bb5f0f72b880c5fcc512218b282298fb  $HOME/cleanroom/runs/cr1/out/example.y
+55655047a089095c99fac8cd13c30481c011c13c1816f27874705098220fbbe5  $HOME/cleanroom/runs/cr1/in/example.req
+4d152ebcbd117ab42aee5c1defadff1b98b0652155028bcf161d090cb30bbf44  $HOME/cleanroom/runs/cr1/ivk/key.bin
+$HOME/cleanroom/runs/cr1/out/example.proof 4159780 bytes
+y_as_u32=        284

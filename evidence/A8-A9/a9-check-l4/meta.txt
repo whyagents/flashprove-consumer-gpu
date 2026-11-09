@@ -1,0 +1,4 @@
+their_proof exit=0 last="YES" id=2cde2d3ad5214393c2adec56f3ee4ba4a97932f15ae92c2077101bc3fd937470
+their in/example.req = config example.req: yes
+covered: r=255 e=256 T=256 C=256 theta=256 cap=0 s=20 sh=8 positions=255..255 tokens=none y=yes next-token=yes policy=exact-match above-clip=0 (places in the request, counted from 0; y=yes: the answer is about y too; it is about nothing else; above-clip: so many of the tokens named by tokens= may co
+result-v1 status=0 claim=next-token id=2cde2d3ad5214393c2adec56f3ee4ba4a97932f15ae92c2077101bc3fd937470 bits=128 work=8 work-rounds=40 least-round=128.00 least-round-without-work=120.31 commitment-assumed-rounds=47 record=1 r=255 e=256 T=256 tokens=none y=yes policy=exact-match C=256 theta=256 cap=0

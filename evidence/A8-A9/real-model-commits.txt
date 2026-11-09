@@ -1,0 +1,13 @@
+aa59d9307dab208196e56c63621153537f4c9e83 p13: accept the 256/32 small model shape (model-shape hunks only of zkwasm/FlashProve-L4 @ eac41543adb3e287e3d98c3c657b8f3cc7b64bb1 upstream-l4-small-model.patch, Apache-2.0)
+cee61ddfc7aa6274df37beb769799fdbb86d7328 exp/sm120 p12: pinned_room: cudaMallocHost instead of cudaHostRegister (WSL2: registered memory is not device-addressable by its host pointer)
+3355b128991cb832e1cb910486c7a686f836f3fe exp/sm120 p10: FOREST_FUSED 1 -> 0: the fused Gram-pass kernels need more shared memory than sm_120 has (k_stored: 219,136 B)
+717b6fb3d83a58e50d0ac0b509e490cfb58ae64e exp/sm120 p11: Form<PackedSrc>: read the packed table from global memory instead of staging 131,072 B in shared memory
+7d54808c5f31eb449541ad2d56d4738fceb47eb8 exp/sm120 p09: k_fold_combine_bytes limit 100 KiB -> 96 KiB: its attribute (102,400 B) exceeds sm_120's per-block maximum
+1f0d03d872c900bf7998bafcc161f53c9c99914f exp/sm120 p08: k_count_keys16: 4 passes of 16384 bins (64 KiB) instead of 2 of 32768 (128 KiB)
+006c0c1fa1cadb3961a5a8f1c0ab63badf43c88c exp/sm120 p07: h_idk<1> attribute 131072 -> 65536: the attribute call itself fails on sm_120 whatever k is
+c3a4feee80b1855440e9a1478e648d85e9362412 exp/sm120 p06: EXPERTS_IN_ONE_LAUNCH 1 -> 0: the one-launch MoE kernel k_grouped_blocks needs > 132 KB of dynamic shared memory (its static_assert names compute capability 9.0's 227 KB)
+58560212d827ffc24569f70fb198202ca655152a exp/sm120 p05: HF_ONCE_ENGINE_ROOM 24 GiB -> 6 GiB: cp_commit reserved 24 GiB of GPU memory for the engine, whatever the model's size, and stopped (exit 2) on a 16 GB card
+ebf051f08456504dd23d1cc111093594a7112b96 exp/sm120 p04: TILED_STAGES 3 -> 2: k_tiled_multiply asked for TILED_ROOM = 110,592 B of dynamic shared memory
+9a92f5db9d55763eaf473e6835160e3f0336ebbd exp/sm120 p03: COUNT_BITS 15 -> 14: k_count / k_count_places asked for 128 KiB of dynamic shared memory; sm_120 allows 101,376 B per block
+6b4dbf903dd4e495abf80e484ed0c8a1911f5d1d exp/sm120: k_ws<4,16> instead of <4,32> (static shared memory 59,136 B > 48 KiB on sm_120)
+abb9da86fa04bf408c60681ba29321cd88beffe6 exp/sm120: build for sm_120 (RTX 5070 Ti) instead of sm_90a

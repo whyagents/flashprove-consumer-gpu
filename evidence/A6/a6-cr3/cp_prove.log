@@ -1,0 +1,74 @@
+p258 at most 1 requests share one opening, each with its own proof file
+p258 timing not hidden: nothing is done to hide the time of a release, so a batch's time shows; empty seats are not proved, so the number of requests in a batch shows;
+p258 THIS PROGRAM WAS BUILT FOR TESTS ALONE (every build is, except prover/build.sh run without an argument): what it makes is for tests alone
+p258 the parameter file meets the conditions for hiding that follow from it alone (their names and what each asks: blocks/frame/hiding_conditions.h) (these conditions count positions and masks; they say nothing of how a record's masks are made)
+setting: field degree 3; requests: fold width 128, 5 repetitions mod q; opening: fold width 168, 5 repetitions mod q; identities up to 2^28 keys; folds inside 2^17; version word 825374792; hb 128; built for tests alone
+# the parameter file allows lookup identities of up to 2^24 keys (line lidb)
+# the stream has five limbs (line xl)
+# the parameter files' digest: hp=0adb76eef05acef273d2b9a9adc0aa985a2cfcfa64b52f4cbca9b63b565a53b2
+# GPU memory: 1.335 GB are in use at the start of this run, including its own CUDA context
+start-up: 1794199950.791 s since the epoch: arguments and parameter file read
+# the test on the weight table runs in this process, on 1 keeper (set up in 0.1 s)
+start-up: 1794199950.868 s since the epoch: the weight table's keepers set up
+# device NVIDIA GeForce RTX 5070 Ti, 70 SMs, max SM clock 2497 MHz, 17.1 GB
+# the layer groups' weights are kept in host memory, 0.096 GB in all, and loaded group by group; the largest group has 0.049 GB
+# weights read as blocks in 0.1 s
+start-up: 1794199951.173 s since the epoch: weights read and pinned
+# scratch memory that three steps of a layer sub-proof's run use one after the other, GB: the forward pass 0.044; the forest of the lookups 0.693 (16 trees of 2^20 keys; 3 levels made again from the keys); the steps from the norms to the gated products 0.167
+# 2 layer sub-proofs of 4 layers each, T 64, d 512, f 1024; per sub-proof: 8 lookup calls, 9437184 key slots, 24674304 committed cells of the request in 9 matrices; kt 65536; GPU memory used 4.1 of 17.1 GB; proof 0.0004 GB; header 177 words
+p258 the parameter file and the sub-proofs' shapes meet the conditions for hiding
+# the chain: 5 links; 670 rows over F, 7 rows over E, 720 blocks
+GPU memory of a request's own proof through the engine, reckoned from its shape (GB = 10^9 bytes):
+  peak 0.20 GB at "A1: a tree of 2^18 leaves of 33 symbols is committed": tables 0.09, trees 0.03, work space 0.07
+  after a link is closed, at most 0.10 GB
+  1 requests in step, one at its peak and the others closed: 0.20 GB
+the keeper of the weight table: W has 2^11 columns, 59392 rows, 66 units; the table has 256 rows and 2^23 columns; an opening has 2 walks over the weights and shows 53 columns
+# leaf table 0: 51 of 65535 columns revealed; a batch reveals 53: room for 1235 batches
+# the close: lent to the opening: the chain library's 0.000 GB, the rooms' 0.537 GB, the slab's 1.021 GB below the 0.590 GB that the opening library keeps: 1.558 GB in all, of which the opening needs 0.012 GB, and 0.010 GB in one piece
+# proving 1 requests at a time; each needs 0.0015 GB of GPU memory for its state between layer groups
+# memory as set-up left it: 1069 GPU buffers, 0.348 GB, looked at: 329 stretches hold constants: 329 short ones, 0.010 GB, with twins on the GPU, and 0 long ones, 0.000 GB, with copies in host memory; the rest is zeros
+# GPU memory of the sub-proofs before the first batch, GB: slab reused by every sub-proof 1.464; shared by sub-proofs of one shape 0.000 (sharing saved 0.000);
+#   buffers that belong to a single sub-proof, in total 0.027; first part of the layer sub-proofs' set-up 0.140. Writes of the set-ups into the slab that the runs of their sub-proofs repeat: 152
+#   of the slab: buffers that all layer sub-proofs keep until their link closes 0.030; then scratch that the steps of a layer sub-proof use in turn 0.693, which its late buffers reuse, at most 0.474, and 0.000 on the forward pass's keys
+#   the slab is as long as the sub-proof that needs the most, GB: the largest layer sub-proof 1.362; the furthest end of the head's and the attention sub-proofs 1.464
+#   sub-proof 2 (the head's or an attention sub-proof), offsets in the slab in GB: it begins at 0.000; its early buffers, which its late ones reuse, from 0.099 to 0.786; its set-up ends at 1.464, its run at 1.464
+#   sub-proof 3 (the head's or an attention sub-proof), offsets in the slab in GB: it begins at 0.000; its early buffers, which its late ones reuse, from 0.002 to 0.482; its set-up ends at 1.145, its run at 1.145
+#   sub-proof 4 (the head's or an attention sub-proof), offsets in the slab in GB: it begins at 0.000; its early buffers, which its late ones reuse, from 0.000 to 0.000; its set-up ends at 0.000, its run at 0.000
+#   in bytes: the slab 1464464384, the end of layer sub-proof 0 in it 1361853440; buffers that belong to a single sub-proof, in total 27062080. 1418 GPU buffers on record. After its first run layer sub-proof 0 requested 0 buffers, 0 bytes, from the slab and got them as separate allocations
+# GPU memory before the first batch, GB: 4.074 of 17.094 in use: GPU copies of the set-up's constants 0.010; other buffers of the prover 0.119; rooms for streamed weights 0.537; the proof's buffer 0.000; the requests' state between layer groups 0.001; weights kept on the GPU 0.002; the sub-proofs' slab 1.611; the sub-proofs' other buffers 0.227; the opening library's set-up 0.128; not accounted for by the prover 1.440
+start-up: 1794199951.445 s since the epoch: set-up done
+batch 0 leaf 0 n 1 tick 1794199952.422 loader_read 0.004 loader_rebuild 0.019 loader_waited 0.000
+# GPU memory of the sub-proofs at the end, GB: slab reused by every sub-proof 1.464; shared by sub-proofs of one shape 0.000 (sharing saved 0.000);
+#   buffers that belong to a single sub-proof, in total 0.039; first part of the layer sub-proofs' set-up 0.140. Writes of the set-ups into the slab that the runs of their sub-proofs repeat: 152
+#   of the slab: buffers that all layer sub-proofs keep until their link closes 0.030; then scratch that the steps of a layer sub-proof use in turn 0.693, which its late buffers reuse, at most 0.474, and 0.000 on the forward pass's keys
+#   the slab is as long as the sub-proof that needs the most, GB: the largest layer sub-proof 1.362; the furthest end of the head's and the attention sub-proofs 1.464
+#   sub-proof 2 (the head's or an attention sub-proof), offsets in the slab in GB: it begins at 0.000; its early buffers, which its late ones reuse, from 0.099 to 0.786; its set-up ends at 1.464, its run at 1.464
+#   sub-proof 3 (the head's or an attention sub-proof), offsets in the slab in GB: it begins at 0.000; its early buffers, which its late ones reuse, from 0.002 to 0.482; its set-up ends at 1.145, its run at 1.145
+#   sub-proof 4 (the head's or an attention sub-proof), offsets in the slab in GB: it begins at 0.000; its early buffers, which its late ones reuse, from 0.000 to 0.000; its set-up ends at 0.000, its run at 0.000
+#   in bytes: the slab 1464464384, the end of layer sub-proof 0 in it 1361853440; buffers that belong to a single sub-proof, in total 38596416. 1429 GPU buffers on record. After its first run layer sub-proof 0 requested 0 buffers, 0 bytes, from the slab and got them as separate allocations
+# GPU memory at the end, GB: 6.130 of 17.094 in use: GPU copies of the set-up's constants 0.010; other buffers of the prover 0.119; rooms for streamed weights 0.537; the proof's buffer 0.000; the requests' state between layer groups 0.001; weights kept on the GPU 0.002; the sub-proofs' slab 1.611; the sub-proofs' other buffers 0.238; the opening library's set-up 0.128; not accounted for by the prover 3.483
+# memory as set-up left it: at the end: 1 waves; a wipe before a turn zeroes 1.801 GB, one at a wave's end 1.948 GB; long stretches of constants that a run changed and that were laid again: 0; GPU memory grew behind the first wave: 0
+the last line: 1794199952.430 s since the epoch: every response that the service owed has been released
+	Command being timed: "env HOME=$HOME/cleanroom/runs/cr3/home TMPDIR=$HOME/cleanroom/runs/cr3/tmp $HOME/cleanroom/progs/cp_prove -isk $HOME/cleanroom/runs/cr3/isk -in $HOME/cleanroom/runs/cr3/in -out $HOME/cleanroom/runs/cr3/out"
+	User time (seconds): 1.58
+	System time (seconds): 0.44
+	Percent of CPU this job got: 101%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.99
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 947108
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 142
+	Minor (reclaiming a frame) page faults: 270732
+	Voluntary context switches: 1780
+	Involuntary context switches: 9
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

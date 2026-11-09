@@ -1,0 +1,9 @@
+run=run10 date=2026-11-09T02:55:27Z verifier_sha256=7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394 pristine_head=9e2bdd8ff5bf9c62f18263d7dac189b0400b260c
+commitment_id_from_our_cp_commit=ec1865bec8a794da19ba0d85e23668b015684120bfef20f333d4bd0996051b95
+stored_example_id=79a5a2bc7a469b40df73dedf40abeb740671e8ae8077738bd3743897aeb22183 (must differ)
+04110cb727d2f387713b2d74719e62b0130d858880b54f3705dd777a3fdf1d87  $HOME/work/a3/run10/out/example.proof
+871cd8edd0dbd8de891216d6409fba14bb5f0f72b880c5fcc512218b282298fb  $HOME/work/a3/run10/out/example.y
+55655047a089095c99fac8cd13c30481c011c13c1816f27874705098220fbbe5  $HOME/work/a3/run10/in/example.req
+6c19687d396cbf5f68561a05a56e6f5a3ef7ecbd273d93ae03f3707e9636a1a3  $HOME/work/a3/run10/ivk/key.bin
+$HOME/work/a3/run10/out/example.proof 4149260 bytes
+y_as_u32=        284

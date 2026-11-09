@@ -1,0 +1,16 @@
+start=2026-11-09T04:39:47Z nvcc=$HOME/cleanroom/cuda-13.2.86/nvidia/cu13/bin/nvcc
+Build cuda_13.2.r13.2/compiler.37953736_0
+verifier_build_exit=0
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/cleanroom/fp-verifier/bin/cp_verify
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/work/flashprove/bin/cp_verify
+verifier_clone_dirty=0
+prover_tree_verifier_build_exit=0
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/cleanroom/fp-prover/bin/cp_verify
+tests_build_exit=0
+end=2026-11-09T04:50:55Z
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 9:56.71
+	Maximum resident set size (kbytes): 2712084
+223f87526914305f834a1583e98371be8fb3ef19b867f838633b43266f8dfafc  $HOME/cleanroom/fp-prover/prover/build/hc/test_build/cp_commit
+6548c5d211cb0524f6edabc6859b8dd3f204c562cf3ab0486748fb0f658c9eb5  $HOME/cleanroom/fp-prover/prover/build/hc/test_build/cp_prove
+a5_build: 699be8b70477a7cfd56c558d9f1b7bf5090ccbe16cba0ed1bf8bf797bf5066e5  $HOME/work/flashprove-sm120/prover/build/hc/test_build/cp_commit
+a5_build: 668facc73aa6158286d5eb47423bde3c570a4b12bacca4b6a44c16789a3b149b  $HOME/work/flashprove-sm120/prover/build/hc/test_build/cp_prove

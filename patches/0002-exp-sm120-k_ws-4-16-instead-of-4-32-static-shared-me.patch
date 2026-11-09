@@ -1,0 +1,27 @@
+From d278085324f45d575686ebbb8d6a256429d10e57 Mon Sep 17 00:00:00 2001
+From: why-research <why-research@localhost>
+Date: Sun, 8 Nov 2026 17:35:08 -0800
+Subject: [PATCH 02/12] exp/sm120: k_ws<4,16> instead of <4,32> (static shared
+ memory 59,136 B > 48 KiB on sm_120)
+
+Exact integer sums; only the per-lane grouping changes, so Ws is unchanged.
+---
+ prover/prover/base.cuh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/prover/prover/base.cuh b/prover/prover/base.cuh
+index 3618df79..1bb20871 100644
+--- a/prover/prover/base.cuh
++++ b/prover/prover/base.cuh
+@@ -275,7 +275,7 @@ static inline void ws_of(int xl, const long long *xst, int T_, int d, int NI, lo
+   if (xl == 5)
+     k_ws<5, 16><<<dim3((T_ + 31) / 32, NI), dim3(32, 16)>>>(xst, T_, d, Ws);
+   else
+-    k_ws<4, 32><<<dim3((T_ + 31) / 32, NI), dim3(32, 32)>>>(xst, T_, d, Ws);
++    k_ws<4, 16><<<dim3((T_ + 31) / 32, NI), dim3(32, 16)>>>(xst, T_, d, Ws); // exp/sm120: was <4, 32>, whose 59,136 B of static shared memory exceed sm_120's 48 KiB
+ }
+ // o[q] = sum_t e[t] * fn(q, t), masked. o must point into the sub-proof's message array: what is
+ // stored is the sum plus the mask entry of the slot o + q, a random element (sc_door::claim(),
+-- 
+2.43.0
+
