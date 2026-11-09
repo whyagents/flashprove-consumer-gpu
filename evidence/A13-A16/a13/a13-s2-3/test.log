@@ -1,0 +1,12 @@
+1. cp_commit without -public-weights: status 0; commitment ID: 7e535a382c506791bb546a755509f814e7ff83f82e10d84cff80fba7ce0046ec
+2. cp_commit with -public-weights: status 0; commitment ID: 5d580d66167058b78ce5d45e2d074d7d6e457672485de9e17a1e82ff59f314e3
+3. the same call again: status 0; files of the two key directories that differ: 0
+4. cp_prove without -public-weights: status 1; files of a response: none
+5. cp_prove with -public-weights: status 0; in its output directory: example.proof example.y 
+6. cp_verify: status 0; last line: YES
+accounting: one-time files: the plan of a key: 43 closeness rounds rest on the theorem on codes (ePrint 2025/2055, Thm 4.6), taken as given, 0 on the bound within a third of the distance; the table has a record
+accounting: one-time files: the plan of an entry: 15 closeness rounds rest on the theorem on codes (ePrint 2025/2055, Thm 4.6), taken as given, 0 on the bound within a third of the distance; the table has a record
+7. cp_verify under another ID: status 1; last line: NO: model-statement
+8. cp_prove on call 1's commitment: status 0; in its output directory: example.proof example.y 
+9. cp_verify on call 1's commitment: status 0; last line: YES
+record_on_public_weights, version H821: all as expected

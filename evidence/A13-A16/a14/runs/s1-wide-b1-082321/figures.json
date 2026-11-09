@@ -1,0 +1,205 @@
+{
+ "machine": {
+  "gpu": {
+   "name": "NVIDIA GeForce RTX 5070 Ti",
+   "driver_version": "610.88",
+   "memory.total": "16303",
+   "memory.used": "682",
+   "pci.bus_id": "00000000:02:00.0",
+   "uuid": "GPU-a3cfb931-c57e-0b58-aa51-55546b4ecd33"
+  },
+  "gpu_asked_as": "0",
+  "CUDA_VISIBLE_DEVICES": null,
+  "CUDA_DEVICE_ORDER": null,
+  "cpus": "0-19",
+  "gpu_numa_node": null,
+  "gpu_numa_node_cpus": null,
+  "container_memory_limit_bytes": null,
+  "machine_memory_bytes": 16624013312,
+  "available_memory_bytes": 15701794816,
+  "free_bytes_for_the_work_directory": 1012544618496,
+  "transparent_hugepage": "always [madvise] never",
+  "version": "0.16.0",
+  "sha256": {
+   "cp_prove": "0a64a28d06858cd3b11a067d3488a8b9433f2722a86e32a00001bb4c574248a8",
+   "cp_verify": "7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394",
+   "policy.txt": "c16a62a890877858bc90cbf9415efb6ed0e620d8dbb93e15c9c2bc4885a9b515",
+   "KL.bin": "482f0952306c7022955545be3d02d2f8e42a2cd26b81154c5c49fd1e803fa215",
+   "layout.txt": "5c0d87074214cf7e697775968ebc4c488b808bdf4c7eafb7ee119c17cbcc2d15"
+  }
+ },
+ "requests_from": "3 windows of 256 token ids below 2048, drawn by this script's rule from the seed 1",
+ "options": {
+  "programs": "$HOME/cleanroom/fp-prover/prover/build/hc",
+  "isk": "$HOME/cleanroom/runs/s2-3/without/isk",
+  "ivk": "$HOME/cleanroom/runs/s2-3/without/ivk",
+  "config": "$HOME/cleanroom/runs/s2-3/config",
+  "id": "7e535a382c506791bb546a755509f814e7ff83f82e10d84cff80fba7ce0046ec",
+  "work": "$HOME/cleanroom/runs/s1-wide-b1-082321",
+  "batch": 1,
+  "in_step": 1,
+  "batches": 3,
+  "memory": "lean,tensor-rooms=8",
+  "least_memory": null,
+  "public_weights": null,
+  "huge_pages": false,
+  "text": null,
+  "requests": null,
+  "seed": 1,
+  "checks_at_once": 5
+ },
+ "tokens_in_a_request": 256,
+ "command": [
+  "$HOME/cleanroom/fp-prover/prover/build/hc/cp_prove",
+  "-isk",
+  "$HOME/cleanroom/runs/s2-3/without/isk",
+  "-spool",
+  "$HOME/cleanroom/runs/s1-wide-b1-082321/spool",
+  "-batch",
+  "1",
+  "-in-step",
+  "1",
+  "-most-batches",
+  "3",
+  "-memory",
+  "lean,tensor-rooms=8"
+ ],
+ "process_id": 392138,
+ "started_ns": 1794241401891844083,
+ "ended_ns": 1794241411096089705,
+ "exit_code": 0,
+ "largest_resident_set_kib": 2117336,
+ "requests": [
+  {
+   "number": 0,
+   "id": "ff0b8ccd30321bfb69b7b63cfa637eace1706a6c38d0ae0afaa3877e056027bd",
+   "left_in_ns": 1794241403495392458,
+   "faults": [],
+   "check": {
+    "exit_code": 0,
+    "verdict": "YES",
+    "ns": 1050104806
+   },
+   "failed": false,
+   "changed_ns": 1794241405221042513,
+   "modified_ns": 1794241405210000000,
+   "seen_ns": 1794241405309196863,
+   "size": 5939468
+  },
+  {
+   "number": 1,
+   "id": "c2137b551c65f98798e66b6effc37e1c83b251471c8e26ed1ea1b6918648667f",
+   "left_in_ns": 1794241405208954843,
+   "faults": [],
+   "check": {
+    "exit_code": 0,
+    "verdict": "YES",
+    "ns": 1049549079
+   },
+   "failed": false,
+   "changed_ns": 1794241406673042005,
+   "modified_ns": 1794241406662000000,
+   "seen_ns": 1794241406711690429,
+   "size": 5953044
+  },
+  {
+   "number": 2,
+   "id": "1ddcbd5527131507f794b0c7095db9def83fced71d72f1e53ecacad7cc856f7f",
+   "left_in_ns": 1794241406711654030,
+   "faults": [],
+   "check": {
+    "exit_code": 0,
+    "verdict": "YES",
+    "ns": 1049317283
+   },
+   "failed": false,
+   "changed_ns": 1794241410804604205,
+   "modified_ns": 1794241410795000000,
+   "seen_ns": 1794241410895579563,
+   "size": 5947412
+  }
+ ],
+ "batches": [
+  {
+   "ids": [
+    "ff0b8ccd30321bfb69b7b63cfa637eace1706a6c38d0ae0afaa3877e056027bd"
+   ],
+   "started_ns": 1794241403495392458,
+   "last_started_ns": 1794241403495392458,
+   "first_release_ns": 1794241405221042513,
+   "release_ns": 1794241405221042513,
+   "modified_ns": 1794241405210000000,
+   "seen_ns": 1794241405309196863
+  },
+  {
+   "ids": [
+    "c2137b551c65f98798e66b6effc37e1c83b251471c8e26ed1ea1b6918648667f"
+   ],
+   "started_ns": 1794241405208954843,
+   "last_started_ns": 1794241405208954843,
+   "first_release_ns": 1794241406673042005,
+   "release_ns": 1794241406673042005,
+   "modified_ns": 1794241406662000000,
+   "seen_ns": 1794241406711690429
+  },
+  {
+   "ids": [
+    "1ddcbd5527131507f794b0c7095db9def83fced71d72f1e53ecacad7cc856f7f"
+   ],
+   "started_ns": 1794241406711654030,
+   "last_started_ns": 1794241406711654030,
+   "first_release_ns": 1794241410804604205,
+   "release_ns": 1794241410804604205,
+   "modified_ns": 1794241410795000000,
+   "seen_ns": 1794241410895579563
+  }
+ ],
+ "gpu_samples": [
+  [
+   1794241401933837074,
+   682
+  ],
+  [
+   1794241402975174562,
+   2627
+  ],
+  [
+   1794241404016319060,
+   7867
+  ],
+  [
+   1794241405051425380,
+   7935
+  ],
+  [
+   1794241406088641635,
+   7937
+  ],
+  [
+   1794241407129416043,
+   7942
+  ],
+  [
+   1794241410858127815,
+   7939
+  ]
+ ],
+ "gpu_sampling_given_up": null,
+ "figures": {
+  "served": 3,
+  "failed": 0,
+  "accepted": 3,
+  "not_accepted": 0,
+  "intervals_ns": [
+   1451999492,
+   4131562200
+  ],
+  "counted": 2,
+  "sum_ns": 5583561692,
+  "tokens_a_second": "91.69",
+  "seconds_a_request": "2.791",
+  "from_the_first_batch": "105.07",
+  "with_start_up": "86.16"
+ },
+ "no_rate_because": []
+}

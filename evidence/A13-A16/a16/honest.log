@@ -1,0 +1,24 @@
+0 - 1 = 0xffffffff00000000
+# device NVIDIA GeForce RTX 5070 Ti, 70 SMs, max SM clock 2497 MHz, 17.1 GB
+the look-up of a group, one call (v 17, d 8, 772 slots): run and written
+the look-up of a group, two calls, a tree of padding alone (v 19, d 11, 963 slots): run and written
+the look-up of a group, three calls, a call's number filled up (v 19, d 18, 1292 slots): run and written
+the look-up of a group, four trees of one call (v 19, d 12, 1004 slots): run and written
+the look-up of a group, sixteen calls (v 21, d 16, 1276 slots): run and written
+the look-up of a group, the cap on a tree's depth above the smallest call (v 19, d 11, 963 slots): run and written
+the look-up of a group, five calls, the second and the fourth all padding but three keys (v 20, d 14, 1135 slots): run and written
+the look-up of a group, sizes not sorted in the list (v 20, d 12, 1047 slots): run and written
+the look-up of a group, four calls, each all padding but three keys (v 19, d 11, 963 slots): run and written
+the look-up of a group, three calls, each all padding but three keys, and a tree of padding alone (v 19, d 11, 963 slots): run and written
+forest_lookup_test: 10 of 10 groups run and written
+the look-up of group 0 (772 slots, on the chain): ok
+the look-up of group 1 (963 slots, on the chain): ok
+the look-up of group 2 (1292 slots, on the chain): ok
+the look-up of group 3 (1004 slots, on the chain): ok
+the look-up of group 4 (1276 slots, on the chain): ok
+the look-up of group 5 (963 slots, on the chain): ok
+the look-up of group 6 (1135 slots, on the chain): ok
+the look-up of group 7 (1047 slots, on the chain): ok
+the look-up of group 8 (963 slots, on the chain): ok
+the look-up of group 9 (963 slots, on the chain): ok
+forest_lookup_check: 10 of 10 groups passed

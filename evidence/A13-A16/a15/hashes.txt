@@ -1,0 +1,10 @@
+run=a commit_exit=0 prove_exit=0 verify_exit=0 last="YES" id=4942be953206913cf3c97c443df610f7ed9c03c0bc1b99437c17c2a11095cfb6
+a 69f94db22375a92531466aa8160b5cf33fed390ac6178c5889c244603d770751  ivk/key.bin
+a 64a4fb799ccd54c5674c70688102e64cf50e8f730b21b8c8a630fc6b1a3bba14  ivk/leaf/0.bin
+a 152b7bf02689e62f9639fd667a8efa8babcab59a07efe9b9286cbf7e8eec3e77  out/example.proof
+a 871cd8edd0dbd8de891216d6409fba14bb5f0f72b880c5fcc512218b282298fb  out/example.y
+run=b commit_exit=0 prove_exit=0 verify_exit=0 last="YES" id=4942be953206913cf3c97c443df610f7ed9c03c0bc1b99437c17c2a11095cfb6
+b 69f94db22375a92531466aa8160b5cf33fed390ac6178c5889c244603d770751  ivk/key.bin
+b 64a4fb799ccd54c5674c70688102e64cf50e8f730b21b8c8a630fc6b1a3bba14  ivk/leaf/0.bin
+b 152b7bf02689e62f9639fd667a8efa8babcab59a07efe9b9286cbf7e8eec3e77  out/example.proof
+b 871cd8edd0dbd8de891216d6409fba14bb5f0f72b880c5fcc512218b282298fb  out/example.y

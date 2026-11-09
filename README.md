@@ -11,13 +11,31 @@
 
 <p align="center">
   <img alt="licence" src="https://img.shields.io/badge/licence-Apache--2.0-a08c5a">
-  <img alt="proofs" src="https://img.shields.io/badge/fresh%20proofs%20accepted-12%2F12-2f6f4f">
-  <img alt="tampers" src="https://img.shields.io/badge/tampered%20inputs%20rejected-69%2F69-2f6f4f">
+  <img alt="proofs" src="https://img.shields.io/badge/fresh%20proofs%20accepted-770%2F770-2f6f4f">
+  <img alt="tampers" src="https://img.shields.io/badge/tampered%20inputs%20rejected-72%2F72-2f6f4f">
+  <img alt="fits" src="https://img.shields.io/badge/Maverick--width%20layers-fit%20in%2016%20GB-2f6f4f">
   <img alt="replication" src="https://img.shields.io/badge/independent%20replication-wanted-b8860b">
   <img alt="gpu" src="https://img.shields.io/badge/GPU-RTX%205070%20Ti%20%C2%B7%20sm__120%20%C2%B7%2016%20GB-1d1d1f">
 </p>
 
 ---
+
+## What's different here
+
+Two other FlashProve ports existed before this one: [FlashProve-L4](https://github.com/zkwasm/FlashProve-L4) on an NVIDIA L4
+datacenter GPU, and an [Apple Silicon rewrite](https://github.com/jp4g/flashprove-mlx). What this repository adds:
+
+- **A store-bought gaming card in a desktop PC.** A GeForce RTX 5070 Ti (consumer Blackwell, 16 GB) that also drives the monitor,
+  under Windows 11 + WSL2. No datacenter GPU, no cloud.
+- **Minimal patches, with a reason for each.** 12 small prover patches (+34 / −28 lines). **Zero** changes to the verifier, protocol or proof format.
+- **A strict judge.** Every proof is checked by upstream's verifier built from a separate pristine checkout. Tamper tests run alongside
+  (69 / 69 rejected), and FlashProve-L4 is cross-checked in both directions (their proof passes our verifier; our proofs give their answer token).
+- **Measured, not estimated.** Layers at **Llama 4 Maverick's full width** (d = 5,120, 40 heads) commit in about 43 s and prove in 3–6 s
+  within 16 GB. The prover serves **full batches of 64 requests** (the format's maximum) with a GPU peak of 9.3 GiB. 750 of 750 proofs in
+  the batch study were accepted ([what fits](#what-fits-in-16-gb)).
+- **Limits first.** What this does *not* show, including the open question about the hiding module, is spelled out [below](#what-this-does-not-show).
+
+## Background
 
 When an AI system answers, how do you know **which model** produced the answer?
 
@@ -37,7 +55,7 @@ We wanted to know what it takes to run it on hardware a developer can buy at a s
 | **Hardware** | GeForce RTX 5070 Ti (consumer Blackwell, compute capability 12.0, 16 GB), which also drives the desktop; Windows 11 + WSL2 Ubuntu 24.04 |
 | **Upstream** | `anthropics/FlashProve` @ `9e2bdd8f` (v0.16.0) |
 | **Patches** | 12 files, +34 / −28 lines to the prover. **0 changes** to the verifier, protocol, or proof format. A 13th patch (from [FlashProve-L4](https://github.com/zkwasm/FlashProve-L4)) adds one small model shape. |
-| **Judge** | Upstream's `cp_verify`, built separately from a pristine checkout. The binary is identical (sha256 `7f9efc1e…4394`) across three independent builds |
+| **Judge** | Upstream's `cp_verify`, built separately from a pristine checkout. The binary is identical (sha256 `7f9efc1e…4394`) across three builds from separate clones **on this one machine** (same g++ 13.3). That shows reproducibility here, not across machines |
 | **Real model** | Karpathy's [TinyStories260K](https://huggingface.co/karpathy/tinyllamas), in FlashProve-L4's integer conversion. Answer token **310** in every run |
 | **Speed** (tiny models, n = 3) | about 2 s to prove, 5–25 s to commit, about 0.7 s to verify on a CPU |
 
@@ -80,6 +98,37 @@ give the same answer token as theirs.
 
 Full write-ups are in [`docs/RESULTS.md`](docs/RESULTS.md). Raw logs and checksums for every run are in [`evidence/`](evidence/).
 
+## What fits in 16 GB
+
+All runs use the production build, synthetic weights, and upstream's configurations and test drivers, unchanged.
+
+**Width (S2).** Upstream's `target_small_file_f2`: **Maverick's full attention width** (d = 5,120, 40 query heads, 8 KV heads, head size 128),
+with 4 layers (Maverick has 48), 16 experts, vocabulary 2,048, and a 256-token window. Run through upstream's own test
+`record_on_public_weights.sh`, n = 3:
+
+| | result |
+|---|---|
+| commit (hiding mode) | 42.5–45.1 s, host RSS 1.46 GB |
+| prove → verify | 3.2–6.1 s → **`YES`** (6 / 6, hiding and public-weights modes); under a wrong ID `NO: model-statement` (3 / 3) |
+| proof size | 5.94–5.95 MB |
+| GPU peak during commit | ~15.5 GiB (15,862 MiB). The commit step deliberately takes the free memory, so this shows what it *took*, not what it *needs* |
+
+**Batch size (S1).** Upstream's `driver/measure_rate.py`: 3 full batches per size, with **every proof checked** by `cp_verify` before any
+figure is printed. 64 is the largest batch the format allows.
+
+| Requests per batch | small model (T = 64): tok/s | GPU peak while proving | Maverick width (T = 256): tok/s | GPU peak while proving |
+|---|---|---|---|---|
+| 1 | 60 | 5.6 GiB | 92 | 7.8 GiB |
+| 8 | 95 | 6.1 GiB | 297 | 8.5 GiB |
+| 64 | 111 | **6.7 GiB** | 295 | **9.3 GiB** |
+
+750 / 750 proofs accepted. The GPU figures include ~0.66 GiB used by the desktop. Rates use upstream's definition (window tokens per second of
+proving) and come from only two intervals each, so they are rough. Not comparable to upstream's H100 figure, which is for the full
+48-layer model. All sizes, with host memory: [`docs/RESULTS.md`](docs/RESULTS.md).
+
+**Not yet measured:** full depth (48 layers), the full vocabulary, and 1,024-token windows. Upstream ships no tool that makes scale files for new
+shapes, so these need either upstream's full-size files (≈ 280 GB of host RAM to commit) or a scale-fitting tool.
+
 ## What it took: the 12 patches
 
 The H100 lets a GPU kernel use up to 227 KB of fast on-chip (shared) memory; this card allows 99 KB. Most of the work was there.
@@ -92,14 +141,19 @@ The H100 lets a GPU kernel use up to 227 KB of fast on-chip (shared) memory; thi
 | 4 | `engine/tiled.cuh` | `TILED_STAGES` 3 → 2 | double instead of triple buffering; exact int8 MMA |
 | 5 | `hf_commit_once.cuh` | engine reservation 24 → 6 GiB | memory policy; upstream: *"No byte of an output file depends on this number"* |
 | 6 | `weights_blocks/experts.cuh` | `EXPERTS_IN_ONE_LAUNCH` 1 → 0 | upstream's cuBLAS host-loop form |
-| 7 | `hiding/forest_table.cuh` | attribute 128 → 64 KiB | launches stay within it |
-| 8 | `hiding/count_keys16.cuh` | 2 halves → 4 quarters | each key counted once |
+| 7 | `hiding/forest_table.cuh` | max-shared-memory attribute 128 → 64 KiB | a ceiling, not an input: every launch makes the same request as before, and one that needed more would abort, not run differently |
+| 8 | `hiding/count_keys16.cuh` | key histogram in 4 passes instead of 2 | each key lands in exactly one pass; the output is the same integer counts (integer atomic adds are order-independent) |
 | 9 | `engine/fold.cuh` | limit 100 → 96 KiB | upstream's field-arithmetic fallback |
 | 10 | `hiding/forest_keys.cuh` | table read from global memory | the same read-only values |
 | 11 | `hiding/forest.cuh` | `FOREST_FUSED` 1 → 0 | upstream's cuBLASLt mode |
 | 12 | `hf_keeper.cu` | `cudaMallocHost` instead of `cudaHostRegister` | under WSL2/WDDM a registered host pointer is unusable in kernels (known behaviour, e.g. in exllamav3) |
 
 The FlashProve-L4 project, working independently on an NVIDIA L4, changed largely the same kernels. We read that as good corroboration.
+
+**Four patches (7, 8, 10, 11) touch `prover/hiding/`**, the lookup argument. Soundness lives in the verifier, but zero-knowledge lives in
+the prover, so these deserve a closer look. [`docs/HIDING.md`](docs/HIDING.md) argues patch by patch that no output byte can change.
+Upstream's own header says that "storage, lanes and the choice of kernels do not change the proof's bytes", and no patch touches the transcript,
+coins, pads or masks. It also gives our plan to *verify* this byte for byte against unmodified upstream on an H100.
 
 ## What this does **not** show
 
@@ -111,7 +165,10 @@ We think this section matters more than the results.
 - **Not formally verified.** Upstream's Lean verifier accepts only its full-size format. Our `YES` comes from the C++ verifier,
   which is tested, not proved.
 - **Weight hiding is not demonstrated.** `cp_verify` never checks it; the production build is the one designed to hide weights.
-- **One machine, WSL2 only, not yet independently replicated.** Native Linux is untested.
+  **Four patches touch the hiding module.** That they preserve hiding is argued from the code and upstream's statements
+  ([`docs/HIDING.md`](docs/HIDING.md)), **not yet verified byte for byte**.
+- **One machine, WSL2 only, not yet independently replicated.** Native Linux, and sm_86 / sm_89 cards (RTX 30 / 40), are untested;
+  a rented-GPU run is planned ([`docs/CLOUD-RUNBOOK.md`](docs/CLOUD-RUNBOOK.md)).
 - **No performance claim.** Timings are n = 3 wall-clock runs on a desktop machine.
 - **Not "the first".** [FlashProve-L4](https://github.com/zkwasm/FlashProve-L4) ported the prover to non-H100 NVIDIA
   hardware with a real model earlier, and an [Apple Silicon rewrite](https://github.com/jp4g/flashprove-mlx) proved off the H100 before that.

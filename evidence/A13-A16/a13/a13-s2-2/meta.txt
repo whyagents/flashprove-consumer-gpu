@@ -1,0 +1,35 @@
+run=s2-2 start=2026-11-09T16:08:53Z tree=aa59d9307dab208196e56c63621153537f4c9e83
+1b39a3d9da06d4a632b7c3a1e94395e71788131e078469c939a24f101f9238fe  $HOME/cleanroom/fp-prover/prover/build/hc/cp_commit
+0a64a28d06858cd3b11a067d3488a8b9433f2722a86e32a00001bb4c574248a8  $HOME/cleanroom/fp-prover/prover/build/hc/cp_prove
+7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  $HOME/cleanroom/fp-prover/prover/build/hc/cp_verify
+b4f5a51fe73c00a76274076771f06ac33a61004bf1379bb4b3c567be331e036a  $HOME/cleanroom/fp-prover/prover/build/make_model
+model.txt: 4 40 8 2048 1024 16 2048 30
+table 8 26 7864320 524287 0 14;lt 8;L 4;d 5120;H 40;G 8;dh 128;f 2048;fe 1024;NE 16;V 2048;
+gpu_before=558 MiB, 16303 MiB
+host_mem_before=Mem:           15853         721       14105           4        1313       15132
+model files: 4096 .;4096 ..;20 fold.txt;279697504 made-00001-of-00002.gguf;249243584 made-00002-of-00002.gguf;3901 wsums.txt;
+505M	$HOME/cleanroom/models/small_file_f2
+record_on_public_weights_exit=0
+last_line=record_on_public_weights, version H821: all as expected
+end=2026-11-09T16:11:12Z
+total_Elapsed (wall clock) time (h:mm:ss or m:ss): 2:18.46
+vram_peak_MiB=15862 samples=515
+1.cp_commit.log:  | RSS  kB
+2.cp_commit.log:  | RSS  kB
+3.cp_commit.log:  | RSS  kB
+4.cp_prove.log:  | RSS  kB
+5.cp_prove.log:  | RSS  kB
+8.cp_prove.log:  | RSS  kB
+--- per call (seconds|max RSS|exit|command)
+45.10_s|1460668_kB|0|cp_commit
+43.28_s|1461828_kB|0|cp_commit
+37.95_s|1461020_kB|0|cp_commit
+Command exited with non-zero status 1
+0.08_s|170304_kB|1|cp_prove
+3.32_s|2079152_kB|0|cp_prove
+6.12_s|2082204_kB|0|cp_prove
+6.cp_verify.log: YES
+7.cp_verify.log: NO: model-statement
+9.cp_verify.log: YES
+proof out.drawn/example.proof 5947348 bytes
+proof out/example.proof 5946964 bytes

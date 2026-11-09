@@ -1,0 +1,8 @@
+honest_exit=0
+0 - 1 = 0xffffffff00000000
+forest_lookup_test: 10 of 10 groups run and written
+forest_lookup_check: 10 of 10 groups passed
+cheats_exit=0
+crossed: forest_lookup_test: 2 of 2 groups run and written; forest_lookup_check: 2 of 2 cheating provers' files refused
+key: forest_lookup_test: 8 of 8 groups run and written; forest_lookup_check: 8 of 8 cheating provers' files refused
+multiplicity: forest_lookup_test: 8 of 8 groups run and written; forest_lookup_check: 8 of 8 cheating provers' files refused

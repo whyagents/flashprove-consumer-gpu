@@ -1,0 +1,23 @@
+	Command being timed: "python3 -B driver/measure_rate.py --programs $HOME/cleanroom/fp-prover/prover/build/hc --isk $HOME/cleanroom/runs/s2-3/without/isk --ivk $HOME/cleanroom/runs/s2-3/without/ivk --config $HOME/cleanroom/runs/s2-3/config --id 7e535a382c506791bb546a755509f814e7ff83f82e10d84cff80fba7ce0046ec --work $HOME/cleanroom/runs/s1-wide-b16-082417 --batch 16 --batches 3"
+	User time (seconds): 120.57
+	System time (seconds): 10.74
+	Percent of CPU this job got: 223%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:58.88
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2779504
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1088
+	Minor (reclaiming a frame) page faults: 4824068
+	Voluntary context switches: 19510
+	Involuntary context switches: 447
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

@@ -1,0 +1,61 @@
+sweep=small id=00b47919634d8a2c79b07868bca6840a64705f4b5719b063745162bb11aba3d2 sizes=[1 4 8 16 32 64] start=2026-11-09T16:17:52Z cp_prove=0a64a28d06858cd3 cp_verify=7f9efc1e86a848a3
+gpu_in_use=667MiB
+--- B=1 exit=0 wall=0:05.63
+  itself. Do not kill cp_prove: any end but exit code 0 puts the commitment under docs/faults.md, "Always first".
+STEADY RATE: 59.57 tokens a second, that is 1.074 seconds a request
+  the intervals between releases, s: 0.949808173 1.198749831
+requests: 3 served with a proof, 0 failed, 0 without a response
+cp_verify: 3 accepted, 0 not accepted, 0 not checked
+  a call's seconds, with 5 side by side: least 0.7, mean 0.7, most 0.7; all calls together: 0.8 s
+
+These lines are in $HOME/cleanroom/runs/s1-small-b1-081752/report.txt, and every time that they rest on in $HOME/cleanroom/runs/s1-small-b1-081752/figures.json.
+gpu_in_use=661MiB
+--- B=4 exit=0 wall=0:14.20
+  itself. Do not kill cp_prove: any end but exit code 0 puts the commitment under docs/faults.md, "Always first".
+STEADY RATE: 97.74 tokens a second, that is 0.654 seconds a request
+  the intervals between releases, s: 2.599386348 2.638882970
+requests: 12 served with a proof, 0 failed, 0 without a response
+cp_verify: 12 accepted, 0 not accepted, 0 not checked
+  a call's seconds, with 5 side by side: least 0.7, mean 0.7, most 0.8; all calls together: 2.4 s
+
+These lines are in $HOME/cleanroom/runs/s1-small-b4-081758/report.txt, and every time that they rest on in $HOME/cleanroom/runs/s1-small-b4-081758/figures.json.
+gpu_in_use=682MiB
+--- B=8 exit=0 wall=0:23.89
+  itself. Do not kill cp_prove: any end but exit code 0 puts the commitment under docs/faults.md, "Always first".
+STEADY RATE: 94.87 tokens a second, that is 0.674 seconds a request
+  the intervals between releases, s: 5.514401253 5.278599331
+requests: 24 served with a proof, 0 failed, 0 without a response
+cp_verify: 24 accepted, 0 not accepted, 0 not checked
+  a call's seconds, with 5 side by side: least 0.7, mean 1.2, most 2.9; all calls together: 6.3 s
+
+These lines are in $HOME/cleanroom/runs/s1-small-b8-081812/report.txt, and every time that they rest on in $HOME/cleanroom/runs/s1-small-b8-081812/figures.json.
+gpu_in_use=696MiB
+--- B=16 exit=0 wall=0:40.34
+  itself. Do not kill cp_prove: any end but exit code 0 puts the commitment under docs/faults.md, "Always first".
+STEADY RATE: 114.16 tokens a second, that is 0.560 seconds a request
+  the intervals between releases, s: 8.769641335 9.169366986
+requests: 48 served with a proof, 0 failed, 0 without a response
+cp_verify: 48 accepted, 0 not accepted, 0 not checked
+  a call's seconds, with 5 side by side: least 0.7, mean 1.0, most 3.3; all calls together: 10.8 s
+
+These lines are in $HOME/cleanroom/runs/s1-small-b16-081836/report.txt, and every time that they rest on in $HOME/cleanroom/runs/s1-small-b16-081836/figures.json.
+gpu_in_use=707MiB
+--- B=32 exit=0 wall=1:15.86
+  itself. Do not kill cp_prove: any end but exit code 0 puts the commitment under docs/faults.md, "Always first".
+STEADY RATE: 103.04 tokens a second, that is 0.621 seconds a request
+  the intervals between releases, s: 18.559361800 21.191376782
+requests: 96 served with a proof, 0 failed, 0 without a response
+cp_verify: 96 accepted, 0 not accepted, 0 not checked
+  a call's seconds, with 5 side by side: least 0.7, mean 0.7, most 0.8; all calls together: 16.1 s
+
+These lines are in $HOME/cleanroom/runs/s1-small-b32-081917/report.txt, and every time that they rest on in $HOME/cleanroom/runs/s1-small-b32-081917/figures.json.
+gpu_in_use=662MiB
+--- B=64 exit=0 wall=2:30.58
+  itself. Do not kill cp_prove: any end but exit code 0 puts the commitment under docs/faults.md, "Always first".
+STEADY RATE: 110.68 tokens a second, that is 0.578 seconds a request
+  the intervals between releases, s: 36.694314489 37.317672976
+requests: 192 served with a proof, 0 failed, 0 without a response
+cp_verify: 192 accepted, 0 not accepted, 0 not checked
+  a call's seconds, with 5 side by side: least 0.7, mean 0.8, most 3.4; all calls together: 34.1 s
+
+These lines are in $HOME/cleanroom/runs/s1-small-b64-082033/report.txt, and every time that they rest on in $HOME/cleanroom/runs/s1-small-b64-082033/figures.json.

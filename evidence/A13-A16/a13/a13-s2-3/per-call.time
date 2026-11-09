@@ -1,0 +1,7 @@
+42.45_s|1461640_kB|0|$HOME/cleanroom/fp-prover/prover/build/hc/cp_commit -weights $HOME/cleanroom/runs/s2-3/model -config $HOME/cleanroom/runs/s2-3/config -M 1 -ivk $HOME/cleanroom/runs/s2-3/without/ivk -isk $HOME/cleanroom/runs/s2-3/without/isk
+43.07_s|1460860_kB|0|$HOME/cleanroom/fp-prover/prover/build/hc/cp_commit -weights $HOME/cleanroom/runs/s2-3/model -config $HOME/cleanroom/runs/s2-3/config -M 1 -ivk $HOME/cleanroom/runs/s2-3/with/ivk -isk $HOME/cleanroom/runs/s2-3/with/isk -public-weights $HOME/cleanroom/runs/s2-3/public.32
+44.91_s|1461764_kB|0|$HOME/cleanroom/fp-prover/prover/build/hc/cp_commit -weights $HOME/cleanroom/runs/s2-3/model -config $HOME/cleanroom/runs/s2-3/config -M 1 -ivk $HOME/cleanroom/runs/s2-3/again/ivk -isk $HOME/cleanroom/runs/s2-3/again/isk -public-weights $HOME/cleanroom/runs/s2-3/public.32
+Command exited with non-zero status 1
+0.09_s|169872_kB|1|$HOME/cleanroom/fp-prover/prover/build/hc/cp_prove -isk $HOME/cleanroom/runs/s2-3/with/isk -in $HOME/cleanroom/runs/s2-3/in -out $HOME/cleanroom/runs/s2-3/out.without
+5.27_s|2078760_kB|0|$HOME/cleanroom/fp-prover/prover/build/hc/cp_prove -isk $HOME/cleanroom/runs/s2-3/with/isk -in $HOME/cleanroom/runs/s2-3/in -out $HOME/cleanroom/runs/s2-3/out -public-weights $HOME/cleanroom/runs/s2-3/public.32
+3.42_s|2078776_kB|0|$HOME/cleanroom/fp-prover/prover/build/hc/cp_prove -isk $HOME/cleanroom/runs/s2-3/without/isk -in $HOME/cleanroom/runs/s2-3/in -out $HOME/cleanroom/runs/s2-3/out.drawn

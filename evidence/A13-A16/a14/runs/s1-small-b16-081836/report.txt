@@ -1,0 +1,84 @@
+THE MACHINE
+GPU: NVIDIA GeForce RTX 5070 Ti; driver 610.88; 16303 MiB of memory, 696 MiB in use now
+  CUDA_VISIBLE_DEVICES is not set, CUDA_DEVICE_ORDER is not set
+  /usr/lib/wsl/lib/nvidia-smi was asked about GPU 0, and is asked for its memory in use once a second while cp_prove runs
+  nvidia-smi numbers GPUs by PCI bus; CUDA does so only with CUDA_DEVICE_ORDER=PCI_BUS_ID. On a machine with GPUs of
+  different models the programs may take another GPU than the one described and sampled here. To be sure, set
+  CUDA_DEVICE_ORDER=PCI_BUS_ID
+CPUs that this process may use: 20 (0-19)
+the GPU's NUMA node: not known
+host memory: 16.6 GB; this container's limit: none found; available now, with file cache counted as available: 15.3 GB
+transparent huge pages (/sys/kernel/mm/transparent_hugepage/enabled): always [madvise] never; -huge-pages: not given
+free room on the work directory's file system, where the proofs will lie: 1013.9 GB
+version (the file VERSION beside this script's directory): 0.16.0
+sha256 0a64a28d06858cd3b11a067d3488a8b9433f2722a86e32a00001bb4c574248a8  cp_prove
+sha256 7f9efc1e86a848a3715c6cc870e465ac2a1c5e8fd1eac09e4809023de7604394  cp_verify
+sha256 8d9ae1dda2e503550cafade93c54c1b8ecc8eb4b6dab3b843c72a478bb892d2f  policy.txt
+sha256 b8fb55ed7c70c4cdc7bac01e804dd0dc79349022ba7972957c7e50a29dc974a2  KL.bin
+sha256 a0cce649d992c6f17d1e27c68ac4b900b828ff6ef0bfe8da7c2491fed9f02225  layout.txt
+
+THE REQUESTS
+48 windows of 64 token ids below 512, drawn by this script's rule from the seed 1.
+Each asks only for the token after its window (r = 63, e = 64).
+All 48 are submitted to $HOME/cleanroom/runs/s1-small-b16-081836/spool; this script's copies are in $HOME/cleanroom/runs/s1-small-b16-081836/requests.
+
+BEFORE THE START
+- This run uses up 3 of the commitment's batches for good. cp_commit's line "the limit:" says how many a leaf table serves.
+- Measure on a commitment that was made for the measurement and serves nobody, on synthetic weights or a public model's
+  files: with secret weights it is a further commitment to the same weights, which our judgement on weight hiding
+  covers only on thin evidence and on conditions of its own (driver/README.md, "The rate").
+- This script reads nothing in the secret key directory, so it cannot see whether a service is using it. It relies on
+  cp_prove's own lock: a second cp_prove on a directory in use does not start. That lock cannot see a cp_prove on a copy
+  of the directory, or one on another machine that shares it, unless the file system applies the lock between machines.
+  It may also miss one that reaches the directory by another route on the same machine (through a container's layer,
+  from a virtual machine, or by a second mount). See docs/service.md, "What cp_prove does at startup".
+- The work directory will hold the requests, the responses and both programs' output. Keep it as secret as the secret
+  key directory: this script removes none of it.
+- All times are this machine's own clock.
+- To stop early, press Ctrl-C once. The script then creates the service's stop file and waits for cp_prove to end by
+  itself. Do not kill cp_prove: any end but exit code 0 puts the commitment under docs/faults.md, "Always first".
+
+THE SERVICE
+HOME=$HOME/cleanroom/runs/s1-small-b16-081836/home TMPDIR=$HOME/cleanroom/runs/s1-small-b16-081836/tmp \
+  $HOME/cleanroom/fp-prover/prover/build/hc/cp_prove -isk $HOME/cleanroom/runs/s1-small-commit/isk -spool $HOME/cleanroom/runs/s1-small-b16-081836/spool -batch 16 -in-step 6 -most-batches 3 -memory lean,tensor-rooms=8
+Its output goes to $HOME/cleanroom/runs/s1-small-b16-081836/cp_prove.txt.
+cp_prove is process 247359.
+1.2 s after cp_prove's start: the first batch has started
+10.9 s after cp_prove's start: 16 of 48 requests have a response
+19.6 s after cp_prove's start: 32 of 48 requests have a response
+28.8 s after cp_prove's start: 48 of 48 requests have a response
+
+THE CHECKS
+48 proofs, one whole call of cp_verify each, 5 side by side, each with -j 4; their output goes to $HOME/cleanroom/runs/s1-small-b16-081836/checks.
+cp_verify has ended on 24 of 48 proofs
+cp_verify has ended on 48 of 48 proofs
+
+THE TIMES, in seconds since 1970 by this machine's clock
+cp_prove was started at 1794241117.258887128 and seen ended at 1794241146.327328609.
+start: when this script saw the batch's first request gone from in/. RELEASE: the latest change time of the batch's files.
+Two more readings of that clock at the release enter no figure: stamp, the modification time that cp_prove itself gives
+the files, and seen, this script's own reading when it first saw the batch's last response.
+batch requests  start                 RELEASE               stamp                 seen                
+    1       16  1794241118.462409910  1794241128.133743356  1794241127.993000000  1794241128.181422058
+    2       16  1794241127.980854387  1794241136.903384691  1794241136.764000000  1794241136.903998134
+    3       16  1794241136.803754337  1794241146.072751677  1794241145.928000000  1794241146.126797923
+
+THE FIGURES
+STEADY RATE: 114.16 tokens a second, that is 0.560 seconds a request
+  16 requests a batch, 6 in one pass over the weights; 64 tokens a request, all of them counted; each proof checks one
+  token, the one after its window; -public-weights not given
+  the intervals between releases, s: 8.769641335 9.169366986
+  their mean: 8.969504160 s; 16 x 64 tokens / that mean = the rate, cut after two places and not rounded
+rate from the first batch's start to the last release: 111.26 tokens a second
+rate with start-up, from cp_prove's start to the last release: 106.61 tokens a second
+start-up, from cp_prove's start to the first batch's start: 1.2 s
+a request's wait, from its batch's start to its release, s: least 8.9, mean 9.2, most 9.6
+from the last release to cp_prove's end: 0.2 s
+the GPU's memory in use, sampled once a second: the largest of 28 samples is 6259 MiB
+host memory, the largest resident set of cp_prove: 1.4 GB
+a proof's size, MB: least 4.14, mean 4.15, most 4.16
+requests: 48 served with a proof, 0 failed, 0 without a response
+cp_verify: 48 accepted, 0 not accepted, 0 not checked
+  a call's seconds, with 5 side by side: least 0.7, mean 1.0, most 3.3; all calls together: 10.8 s
+
+These lines are in $HOME/cleanroom/runs/s1-small-b16-081836/report.txt, and every time that they rest on in $HOME/cleanroom/runs/s1-small-b16-081836/figures.json.
