@@ -126,8 +126,9 @@ figure is printed. 64 is the largest batch the format allows.
 proving) and come from only two intervals each, so they are rough. Not comparable to upstream's H100 figure, which is for the full
 48-layer model. All sizes, with host memory: [`docs/RESULTS.md`](docs/RESULTS.md).
 
-**Not yet measured:** full depth (48 layers), the full vocabulary, and 1,024-token windows. Upstream ships no tool that makes scale files for new
-shapes, so these need either upstream's full-size files (≈ 280 GB of host RAM to commit) or a scale-fitting tool.
+**Not yet measured:** full depth (48 layers), the full vocabulary, and 1,024-token windows. Upstream ships tools that fit the scales and make
+the layout file, but none that writes the parameter file for a new shape. So these need either upstream's full-size files (≈ 280 GB of host
+RAM to commit) or a parameter file written by hand.
 
 ## What it took: the 12 patches
 

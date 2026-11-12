@@ -404,8 +404,10 @@ The prove phase's own peak was not separated yet (next: split the VRAM trace by 
 - Weight hiding: the drawn-seed mode ran, but nothing here tests what is hidden (upstream's own caveat in the test header).
 
 ## What it tells the scaling question
-Width is **not** the limit on this card. The next axes are batch size (S1) and depth or vocabulary; the latter need scale files that upstream does not
-ship tools for. Evidence: `evidence/logs/session-004/a13/`.
+Width is **not** the limit on this card. The next axes are batch size (S1) and depth or vocabulary; the latter need a parameter file for the
+new shape, which no upstream tool writes (upstream does ship the scale fit and the layout tool). Evidence: `evidence/logs/session-004/a13/`.
+
+*Corrected 2026-11-12. This paragraph first said that upstream ships no tools for scale files.*
 
 ---
 
